@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comper Engine SDK 1.0 - Professional Browser Development Kit 🚀</title>
+    <meta name="description" content="Comper Engine SDK - Dünyanın en gelişmiş 1GB'lık tarayıcı geliştirme kiti. Night Red Ultra grafik motoru, modern API'ler ve profesyonel özellikler.">
+    <meta name="keywords" content="browser engine, SDK, development kit, Comper Engine, Night Red Ultra, C++, graphics engine">
+    <meta name="author" content="Comper Engine Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Comper Engine SDK 1.0 - Professional Browser Development Kit">
+    <meta property="og:description" content="Dünyanın en gelişmiş tarayıcı geliştirme kiti">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tda45.github.io/comper-engine/">
+    
+    <!-- Night Red Ultra Theme Styles -->
+    <style>
+        :root {
+            --primary-red: #E60000;
+            --dark-bg: #050505;
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --surface-dark: #1A1A1A;
+            --neon-glow: #FF0033;
+            --border-red: #CC0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-red), 
+                        0 0 20px var(--primary-red), 
+                        0 0 30px var(--neon-glow);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.8),
+                        inset 0 0 15px rgba(230, 0, 0, 0.3);
+        }
+        
+        .neon-button {
+            background: linear-gradient(135deg, var(--primary-red), var(--border-red));
+            color: var(--text-white);
+            border: 2px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+            margin: 10px 5px;
+        }
+        
+        .neon-button:hover {
+            background: linear-gradient(135deg, var(--neon-glow), var(--primary-red));
+            box-shadow: 0 0 30px rgba(255, 0, 51, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(180deg, var(--surface-dark), var(--dark-bg));
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-glow), var(--primary-red), var(--border-red), var(--neon-glow));
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--surface-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        nav a.active {
+            background: var(--primary-red);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary-red), var(--neon-glow), var(--border-red));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--neon-glow);
+        }
+        
+        /* File List Styles */
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .file-card {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(230, 0, 0, 0.3);
+            border-color: var(--neon-glow);
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-red);
+        }
+        
+        .file-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-white);
+        }
+        
+        .file-size {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-glow">Comper Engine SDK</h1>
+        <p class="subtitle">Professional Browser Development Kit - 1.0</p>
+        <div style="margin-top: 2rem;">
+            <a href="https://github.com/tda45/comper-engine" class="neon-button" target="_blank">📦 GitHub Repository</a>
+            <a href="#download" class="neon-button">📥 Download SDK</a>
+            <a href="#documentation" class="neon-button">📚 Documentation</a>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview">🌟 Overview</a></li>
+            <li><a href="#files">📁 Files</a></li>
+            <li><a href="#download">📥 Download</a></li>
+            <li><a href="#documentation">📚 Documentation</a></li>
+            <li><a href="#support">🤝 Support</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview" class="fade-in">
+            <h2 class="neon-glow">🌟 Overview</h2>
+            <div style="text-align: center; margin: 2rem 0;">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                    <strong>Comper Engine SDK 1.0</strong> - Professional Browser Development Kit
+                </p>
+                <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 2rem;">
+                    Dünyanın en gelişmiş tarayıcı geliştirme kiti. Night Red Ultra grafik motoru, 
+                    modern API'ler ve profesyonel özelliklerle donanımlı bir tarayıcı geliştirme deneyimi sunar.
+                </p>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: var(--surface-dark); padding: 1rem; border-radius: 8px; border: 1px solid var(--primary-red);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎨</div>
+                        <div style="font-weight: bold;">Night Red Ultra</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Neon Graphics</div>
+                    </div>
+                    <div style="background: var(--surface-dark); padding: 1rem; border-radius: 8px; border: 1px solid var(--primary-red);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌐</div>
+                        <div style="font-weight: bold;">Modern APIs</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">1000+ Functions</div>
+                    </div>
+                    <div style="background: var(--surface-dark); padding: 1rem; border-radius: 8px; border: 1px solid var(--primary-red);">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📑</div>
+                        <div style="font-weight: bold;">Multi-Tab</div>
+                        <div style="color: var(--text-gray); font-size: 0.9rem;">Advanced Management</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="files" class="fade-in">
+            <h2 class="neon-glow">📁 Files</h2>
+            <div class="file-grid">
+                <div class="file-card">
+                    <div class="file-icon">📄</div>
+                    <div class="file-name">README.md</div>
+                    <div class="file-size">Project Documentation</div>
+                    <a href="README.md" class="neon-button" style="margin-top: 1rem;">View</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">📜</div>
+                    <div class="file-name">LICENSE</div>
+                    <div class="file-size">MIT License</div>
+                    <a href="LICENSE" class="neon-button" style="margin-top: 1rem;">View</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">📚</div>
+                    <div class="file-name">sdk/</div>
+                    <div class="file-size">API Documentation</div>
+                    <a href="sdk/" class="neon-button" style="margin-top: 1rem;">Browse</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">📦</div>
+                    <div class="file-name">Includes/</div>
+                    <div class="file-size">Header Files</div>
+                    <a href="Includes/" class="neon-button" style="margin-top: 1rem;">Browse</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">⚙️</div>
+                    <div class="file-name">Core/</div>
+                    <div class="file-size">Engine Source</div>
+                    <a href="Core/" class="neon-button" style="margin-top: 1rem;">Browse</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">🎨</div>
+                    <div class="file-name">Resources/</div>
+                    <div class="file-size">Graphics & Themes</div>
+                    <a href="Resources/" class="neon-button" style="margin-top: 1rem;">Browse</a>
+                </div>
+                <div class="file-card">
+                    <div class="file-icon">📋</div>
+                    <div class="file-name">Templates/</div>
+                    <div class="file-size">Browser Templates</div>
+                    <a href="Templates/" class="neon-button" style="margin-top: 1rem;">Browse</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="download" class="fade-in">
+            <h2 class="neon-glow">📥 Download</h2>
+            <div style="text-align: center; margin: 2rem 0;">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                    <strong>Comper Engine SDK 1.0</strong> - Professional Browser Development Kit
+                </p>
+                <div style="margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine/archive/refs/heads/main.zip" class="neon-button" style="font-size: 1.1rem; padding: 15px 30px;">
+                        📥 Download Complete SDK (1.5GB)
+                    </a>
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine" class="neon-button" target="_blank">
+                        📦 View on GitHub
+                    </a>
+                </div>
+                <div style="color: var(--text-gray); margin-top: 1rem;">
+                    <p>✅ Windows x64 Support</p>
+                    <p>✅ Linux Support</p>
+                    <p>✅ C++17 Compatible</p>
+                    <p>✅ DirectX 12 & Vulkan</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="documentation" class="fade-in">
+            <h2 class="neon-glow">📚 Documentation</h2>
+            <div style="text-align: center;">
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    Kapsamlı dokümantasyon ve API referansı
+                </p>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <a href="sdk/" class="neon-button">API Documentation</a>
+                    <a href="https://github.com/tda45/comper-engine/wiki" class="neon-button" target="_blank">Wiki</a>
+                    <a href="https://github.com/tda45/comper-engine/blob/main/README.md" class="neon-button" target="_blank">README</a>
+                </div>
+                <div style="color: var(--text-gray);">
+                    <p>📖 Interactive API documentation</p>
+                    <p>💻 Code examples</p>
+                    <p>🎯 Quick start guide</p>
+                    <p>📱 Responsive design</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="support" class="fade-in">
+            <h2 class="neon-glow">🤝 Support</h2>
+            <div style="text-align: center;">
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    Profesyonel destek ve topluluk
+                </p>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine/issues" class="neon-button" target="_blank">🐛 Report Issues</a>
+                    <a href="https://github.com/tda45/comper-engine/discussions" class="neon-button" target="_blank">💬 Discussions</a>
+                    <a href="https://github.com/tda45/comper-engine/wiki" class="neon-button" target="_blank">📖 Wiki</a>
+                </div>
+                <div style="color: var(--text-gray);">
+                    <p>📧 Technical support</p>
+                    <p>🎓 Learning resources</p>
+                    <p>🌟 Community contributions</p>
+                    <p>🔄 Regular updates</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Comper Engine SDK. Tüm hakları saklıdır.</p>
+        <p style="margin-top: 1rem;">
+            <a href="https://github.com/tda45/comper-engine" style="color: var(--primary-red);">GitHub</a> | 
+            <a href="https://github.com/tda45/comper-engine/blob/main/LICENSE" style="color: var(--primary-red);">License</a> | 
+            <a href="https://github.com/tda45/comper-engine/issues" style="color: var(--primary-red);">Support</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

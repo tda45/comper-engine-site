@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comper Engine SDK - Professional Browser Development Kit</title>
+    <title>Comper Engine SDK 1.0 - Professional Browser Development Kit 🚀</title>
+    <meta name="description" content="Comper Engine SDK - Dünyanın en gelişmiş 1GB'lık tarayıcı geliştirme kiti. Night Red Ultra grafik motoru, modern API'ler ve profesyonel özellikler.">
+    <meta name="keywords" content="browser engine, SDK, development kit, Comper Engine, Night Red Ultra, C++, graphics engine">
+    <meta name="author" content="Comper Engine Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Comper Engine SDK 1.0 - Professional Browser Development Kit">
+    <meta property="og:description" content="Dünyanın en gelişmiş tarayıcı geliştirme kiti">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tda45.github.io/comper-engine/">
     
     <!-- Night Red Ultra Theme Styles -->
     <style>
@@ -55,6 +64,7 @@
             display: inline-block;
             transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+            margin: 10px 5px;
         }
         
         .neon-button:hover {
@@ -184,61 +194,66 @@
             color: var(--neon-glow);
         }
         
-        /* SDK Sections Grid */
-        .sdk-grid {
+        /* Feature Grid */
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin: 2rem 0;
         }
         
-        .sdk-section {
-            background: var(--dark-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--primary-red);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-        
-        .sdk-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(230, 0, 0, 0.5);
-            border-color: var(--neon-glow);
-        }
-        
-        .sdk-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .sdk-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-red);
-        }
-        
-        .sdk-description {
-            color: var(--text-gray);
-            line-height: 1.6;
-        }
-        
-        /* Code Block */
-        .code-block {
+        .feature-card {
             background: var(--dark-bg);
             border: 1px solid var(--primary-red);
             border-radius: 8px;
             padding: 1.5rem;
-            margin: 1rem 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
         
-        .code-block pre {
-            margin: 0;
-            white-space: pre-wrap;
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(230, 0, 0, 0.3);
+            border-color: var(--neon-glow);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-red);
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, var(--surface-dark), var(--dark-bg));
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.5);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
         }
         
         /* Footer */
@@ -261,8 +276,12 @@
                 gap: 0.5rem;
             }
             
-            .sdk-grid {
+            .feature-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -290,356 +309,176 @@
 <body>
     <header>
         <h1 class="neon-glow">Comper Engine SDK</h1>
-        <p class="subtitle">Professional Browser Development Kit - 1.5GB'lık Geliştirme Gücü</p>
-        <a href="#quickstart" class="neon-button">Hızlı Başlangıç</a>
+        <p class="subtitle">Professional Browser Development Kit - 1.0</p>
+        <div style="margin-top: 2rem;">
+            <a href="https://github.com/tda45/comper-engine" class="neon-button" target="_blank">📦 GitHub Repository</a>
+            <a href="#download" class="neon-button">📥 Download SDK</a>
+            <a href="#documentation" class="neon-button">📚 Documentation</a>
+        </div>
     </header>
     
     <nav>
         <ul>
-            <li><a href="#overview" class="active">Genel Bakış</a></li>
-            <li><a href="#sdk-core">SDK Core</a></li>
-            <li><a href="#sdk-network">SDK Network</a></li>
-            <li><a href="#sdk-render">SDK Render</a></li>
-            <li><a href="#sdk-html">SDK HTML</a></li>
-            <li><a href="#sdk-browser">SDK Browser</a></li>
-            <li><a href="#sdk-download">SDK Download</a></li>
-            <li><a href="#examples">Örnekler</a></li>
-            <li><a href="#download">İndir</a></li>
+            <li><a href="#features">✨ Features</a></li>
+            <li><a href="#stats">📊 Statistics</a></li>
+            <li><a href="#download">📥 Download</a></li>
+            <li><a href="#documentation">📚 Documentation</a></li>
+            <li><a href="#support">🤝 Support</a></li>
         </ul>
     </nav>
     
     <main>
-        <section id="overview" class="fade-in">
-            <h2 class="neon-glow">Dünyanın En Gelişmiş Tarayıcı SDK'si</h2>
-            <p>Comper Engine SDK, profesyonel tarayıcı geliştirme için tasarlanmış devasa bir kütüphane paketidir. Geliştiriciler sadece birkaç konfigürasyon dosyasını düzenleyerek kendi profesyonel tarayıcılarını oluşturabilirler.</p>
-            
-            <div class="sdk-grid">
-                <div class="sdk-section">
-                    <div class="sdk-icon">🎨</div>
-                    <div class="sdk-title">Night Red Ultra</div>
-                    <div class="sdk-description">Shader destekli, neon parlmalı, 4K grafik motoru</div>
+        <section id="features" class="fade-in">
+            <h2 class="neon-glow">✨ Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Night Red Ultra Graphics</h3>
+                    <p>Neon glow efektleri, 4K/120 FPS desteği ve modern rendering motoru.</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">🛠️</div>
-                    <div class="sdk-title">Gelişmiş DevTools</div>
-                    <div class="sdk-description">Chrome'dan daha detaylı inspector ve analiz araçları</div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Modern Network Engine</h3>
+                    <p>HTTP/HTTPS, WebSocket ve multi-threaded ağ yönetimi.</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">🔒</div>
-                    <div class="sdk-title">AdBlocker Engine</div>
-                    <div class="sdk-description">Real-time reklam engelleme ve güvenlik filtreleme</div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>HTML5 Parser</h3>
+                    <p>Tam HTML5 desteği, DOM manipulation ve CSS processing.</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">📬</div>
-                    <div class="sdk-title">PDF & Media</div>
-                    <div class="sdk-description">Harici oynatıcı gerekmez, 4K video desteği</div>
+                <div class="feature-card">
+                    <div class="feature-icon">📑</div>
+                    <h3>Advanced Tab Management</h3>
+                    <p>Multi-tab desteği, navigation stack ve session management.</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">📜</div>
-                    <div class="sdk-title">Comper Scripts</div>
-                    <div class="sdk-description">v8 tabanlı scripting ve eklenti sistemi</div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Bookmark System</h3>
+                    <p>Hierarchical folder yapısı, search ve metadata desteği.</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">�</div>
-                    <div class="sdk-title">Ultra Performans</div>
-                    <div class="sdk-description">Multi-threading, GPU acceleration, memory optimization</div>
+                <div class="feature-card">
+                    <div class="feature-icon">📥</div>
+                    <h3>Download Manager</h3>
+                    <p>Multi-threaded indirme, pause/resume ve güvenlik kontrolleri.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>DevTools Integration</h3>
+                    <p>Inspector, debugger ve performance monitoring araçları.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3>AdBlocker Engine</h3>
+                    <p>Entegre reklam engelleme ve content filtering sistemi.</p>
                 </div>
             </div>
         </section>
         
-        <section id="sdk-core" class="fade-in">
-            <h2 class="neon-glow">SDK Core API</h2>
-            <p>Comper Engine'in temel motoru ve çekirdek işlevsellikleri.</p>
-            
-            <div class="code-block">
-                <pre>#include "Includes/Core/comper_core.h"
-#include "Includes/SDK/comper_sdk.h"
-
-using namespace ComperCore;
-using namespace ComperSDK;
-
-class MyBrowser : public ComperEngine {
-public:
-    void Run() {
-        // Night Red Ultra temasını uygula
-        NightRedUltra::EnableNeonGlow(true);
-        NightRedUltra::SetNeonIntensity(0.8f);
-        NightRedUltra::SetGlowColor(230, 0, 0);
-        
-        // Sayfayı yükle
-        NetworkResponse response = LoadPage("https://example.com");
-        
-        if (response.IsSuccess()) {
-            auto document = ParseHTML(response.body);
-            RenderPage(document);
-        }
-    }
-};</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>Engine Management:</strong> Başlatma, kapatma, konfigürasyon</li>
-                <li><strong>Theme System:</strong> Night Red Ultra entegrasyonu</li>
-                <li><strong>Resource Management:</strong> Bellek optimizasyonu ve kaynak yönetimi</li>
-                <li><strong>Error Handling:</strong> Detaylı hata yönetimi ve logging</li>
-            </ul>
-        </section>
-        
-        <section id="sdk-network" class="fade-in">
-            <h2 class="neon-glow">SDK Network API</h2>
-            <p>HTTP/HTTPS istekleri, WebSocket bağlantıları ve ağ yönetimi.</p>
-            
-            <div class="code-block">
-                <pre>NetworkManager network;
-network.Initialize();
-
-NetworkResponse response = network.Get("https://example.com");
-if (response.IsSuccess()) {
-    std::cout << "Content: " << response.body << std::endl;
-}
-
-// Async istek
-network.AsyncGet("https://api.example.com/data", 
-    [](const NetworkResponse& response) {
-        // Callback fonksiyonu
-        std::cout << "Async response received!" << std::endl;
-    });</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>HTTP/HTTPS Support:</strong> Modern protokol desteği</li>
-                <li><strong>Connection Pooling:</strong> Performans için bağlantı havuzu</li>
-                <li><strong>Async Operations:</strong> Asenkron istek desteği</li>
-                <li><strong>SSL/TLS Security:</strong> Güvenli bağlantılar</li>
-                <li><strong>Cookie Management:</strong> Otomatik cookie yönetimi</li>
-            </ul>
-        </section>
-        
-        <section id="sdk-render" class="fade-in">
-            <h2 class="neon-glow">SDK Render API</h2>
-            <p>2D/3D rendering, Night Red Ultra grafik motoru ve GPU acceleration.</p>
-            
-            <div class="code-block">
-                <pre>Renderer renderer;
-renderer.Initialize(window_handle);
-
-// Night Red Ultra efektleri
-NightRedUltra::EnableNeonGlow(true);
-NightRedUltra::SetNeonIntensity(0.9f);
-
-// Çizim işlemleri
-renderer.Clear(Color(0.02f, 0.02f, 0.02f, 1.0f));
-renderer.DrawFilledRectangle(Rectangle(100, 100, 200, 50), 
-                              Color(0.9f, 0.0f, 0.0f, 1.0f));
-renderer.DrawText("Hello Comper!", Point(150, 150), 
-                  Color(1.0f, 1.0f, 1.0f, 1.0f));
-renderer.Present();</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>2D/3D Rendering:</strong> DirectX 12 ve Vulkan desteği</li>
-                <li><strong>Night Red Ultra:</strong> Özel shader efektleri</li>
-                <li><strong>GPU Acceleration:</strong> Hardware hızlandırma</li>
-                <li><strong>4K/8K Support:</strong> Ultra yüksek çözünürlük</li>
-                <li><strong>120 FPS:</strong> Yüksek kare hızı</li>
-            </ul>
-        </section>
-        
-        <section id="sdk-html" class="fade-in">
-            <h2 class="neon-glow">SDK HTML API</h2>
-            <p>HTML5 parsing, DOM manipulation ve CSS processing.</p>
-            
-            <div class="code-block">
-                <pre>HTMLParser parser;
-std::shared_ptr&lt;DOMDocument&gt; document = parser.Parse(html);
-
-// Element seçimi
-auto element = document->QuerySelector("#main .content");
-if (element) {
-    element->SetAttribute("class", "highlighted");
-    element->SetTextContent("Updated content");
-}
-
-// Yeni element oluşturma
-auto div = document->CreateElement("div");
-div->SetAttribute("id", "new-div");
-div->SetTextContent("Dynamic content");
-document->GetDocumentElement()->AppendChild(div);</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>HTML5 Parser:</strong> Modern standart desteği</li>
-                <li><strong>CSS3 Support:</strong> Stil ve layout motoru</li>
-                <li><strong>DOM Manipulation:</strong> Element yönetimi</li>
-                <li><strong>Query Selector:</strong> CSS selector desteği</li>
-                <li><strong>Event Handling:</strong> Olay yönetimi</li>
-            </ul>
-        </section>
-        
-        <section id="sdk-browser" class="fade-in">
-            <h2 class="neon-glow">SDK Browser API</h2>
-            <p>Modern tarayıcı özellikleri: sekme yönetimi, yer işaretleri, geçmiş.</p>
-            
-            <div class="code-block">
-                <pre>Browser browser;
-browser.Initialize();
-
-// Sekme yönetimi
-std::string tab1 = browser.CreateTab("https://google.com");
-std::string tab2 = browser.CreateTab("https://github.com");
-
-// Yer işareti ekleme
-browser.AddBookmark("Google", "https://google.com");
-
-// Geçmiş araması
-auto history = browser.SearchHistory("github.com");
-
-// Navigasyon
-browser.NavigateTab(tab1, "https://example.com");
-browser.GoBackInTab(tab1);
-browser.GoForwardInTab(tab1);</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>Tab Management:</strong> Multi-tab sistemi</li>
-                <li><strong>Bookmark System:</strong> Klasör yapısı ile yer işaretleri</li>
-                <li><strong>History Tracking:</strong> Otomatik geçmiş kaydı</li>
-                <li><strong>Session Management:</strong> Oturum yönetimi</li>
-                <li><strong>Live URL Updates:</strong> Canlı URL değişimi</li>
-            </ul>
-        </section>
-        
-        <section id="sdk-download" class="fade-in">
-            <h2 class="neon-glow">SDK Download API</h2>
-            <p>Multi-threaded indirme yönetimi, pause/resume desteği ve güvenlik kontrolleri.</p>
-            
-            <div class="code-block">
-                <pre>DownloadManager download_manager;
-download_manager.Initialize();
-
-// İndirme ekleme
-std::string download_id = download_manager.AddDownload(
-    "https://example.com/file.zip", 
-    "download.zip", 
-    DownloadPriority::HIGH
-);
-
-// Progress takibi
-download_manager.on_download_progress = 
-    [](const DownloadItem& download) {
-        std::cout << "Progress: " 
-                  << download.GetFormattedProgress() << std::endl;
-    };
-
-// İndirme kontrolü
-auto download = download_manager.GetDownload(download_id);
-if (download->IsDownloading()) {
-    download->Pause();
-    // Daha sonra devam ettir
-    download->Resume();
-}</pre>
-            </div>
-            
-            <h3>Özellikler</h3>
-            <ul>
-                <li><strong>Multi-threaded:</strong> Eşzamanlı indirme desteği</li>
-                <li><strong>Pause/Resume:</strong> İndirme kontrolü</li>
-                <li><strong>Progress Tracking:</strong> Real-time progress ve ETA</li>
-                <li><strong>File Verification:</strong> Bütünlük kontrolü</li>
-                <li><strong>Malware Scanning:</strong> Güvenlik taraması</li>
-            </ul>
-        </section>
-        
-        <section id="examples" class="fade-in">
-            <h2 class="neon-glow">Örnekler</h2>
-            <p>Comper Engine SDK kullanımı için çeşitli örnekler.</p>
-            
-            <div class="sdk-grid">
-                <div class="sdk-section">
-                    <div class="sdk-icon">�</div>
-                    <div class="sdk-title">Basic Browser</div>
-                    <div class="sdk-description">Hızlı başlangıç için temel tarayıcı</div>
+        <section id="stats" class="fade-in">
+            <h2 class="neon-glow">📊 Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1.5GB</div>
+                    <div class="stat-label">SDK Size</div>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">🚀</div>
-                    <div class="sdk-title">Advanced Browser</div>
-                    <div class="sdk-description">Gelişmiş özellikler ve performans</div>
+                <div class="stat-card">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">API Functions</div>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">🏢</div>
-                    <div class="sdk-title">Enterprise Browser</div>
-                    <div class="sdk-description">Kurumsal güvenlik ve yönetim</div>
+                <div class="stat-card">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Source Files</div>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">📑</div>
-                    <div class="sdk-title">Tab Browser</div>
-                    <div class="sdk-description">Modern sekme yönetimi ve UI</div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Complete Examples</div>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">🚀</div>
-                    <div class="sdk-title">Download Manager</div>
-                    <div class="sdk-description">Multi-threaded indirme sistemi</div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">API Modules</div>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">💼</div>
-                    <div class="sdk-title">Professional Browser</div>
-                    <div class="sdk-description">Production-ready, enterprise seviyesi</div>
+                <div class="stat-card">
+                    <div class="stat-number">4K</div>
+                    <div class="stat-label">Graphics Support</div>
                 </div>
             </div>
         </section>
         
         <section id="download" class="fade-in">
-            <h2 class="neon-glow">İndir</h2>
-            <p>Comper Engine SDK'yı hemen indirin!</p>
-            
+            <h2 class="neon-glow">📥 Download</h2>
             <div style="text-align: center; margin: 2rem 0;">
-                <a href="https://github.com/tda45/comper-engine/archive/refs/heads/main.zip" class="neon-button" style="font-size: 1.2rem; padding: 1rem 2rem;">
-                    🚀 SDK'yı İndir
-                </a>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                    <strong>Comper Engine SDK 1.0</strong> - Professional Browser Development Kit
+                </p>
+                <div style="margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine/archive/refs/heads/main.zip" class="neon-button" style="font-size: 1.1rem; padding: 15px 30px;">
+                        📥 Download Complete SDK (1.5GB)
+                    </a>
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine" class="neon-button" target="_blank">
+                        📦 View on GitHub
+                    </a>
+                </div>
+                <div style="color: var(--text-gray); margin-top: 1rem;">
+                    <p>✅ Windows x64 Support</p>
+                    <p>✅ Linux Support</p>
+                    <p>✅ C++17 Compatible</p>
+                    <p>✅ DirectX 12 & Vulkan</p>
+                </div>
             </div>
-            
-            <div class="sdk-grid">
-                <div class="sdk-section">
-                    <div class="sdk-icon">📦</div>
-                    <div class="sdk-title">GitHub</div>
-                    <div class="sdk-description">Kaynak kodu ve releases</div>
+        </section>
+        
+        <section id="documentation" class="fade-in">
+            <h2 class="neon-glow">📚 Documentation</h2>
+            <div style="text-align: center;">
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    Kapsamlı dokümantasyon ve API referansı
+                </p>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <a href="sdk/core.html" class="neon-button">Core API</a>
+                    <a href="sdk/network.html" class="neon-button">Network API</a>
+                    <a href="sdk/render.html" class="neon-button">Render API</a>
+                    <a href="sdk/html.html" class="neon-button">HTML API</a>
+                    <a href="sdk/browser.html" class="neon-button">Browser API</a>
+                    <a href="sdk/download.html" class="neon-button">Download API</a>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">📖</div>
-                    <div class="sdk-title">Docs</div>
-                    <div class="sdk-description">Online dokümantasyon</div>
+                <div style="color: var(--text-gray);">
+                    <p>📖 Interactive API documentation</p>
+                    <p>💻 Code examples</p>
+                    <p>🎯 Quick start guide</p>
+                    <p>📱 Responsive design</p>
                 </div>
-                
-                <div class="sdk-section">
-                    <div class="sdk-icon">💬</div>
-                    <div class="sdk-title">Discord</div>
-                    <div class="sdk-description">Topluluk ve destek</div>
+            </div>
+        </section>
+        
+        <section id="support" class="fade-in">
+            <h2 class="neon-glow">🤝 Support</h2>
+            <div style="text-align: center;">
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    Profesyonel destek ve topluluk
+                </p>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <a href="https://github.com/tda45/comper-engine/issues" class="neon-button" target="_blank">🐛 Report Issues</a>
+                    <a href="https://github.com/tda45/comper-engine/discussions" class="neon-button" target="_blank">💬 Discussions</a>
+                    <a href="https://github.com/tda45/comper-engine/wiki" class="neon-button" target="_blank">📖 Wiki</a>
+                </div>
+                <div style="color: var(--text-gray);">
+                    <p>📧 Technical support</p>
+                    <p>🎓 Learning resources</p>
+                    <p>🌟 Community contributions</p>
+                    <p>🔄 Regular updates</p>
                 </div>
             </div>
         </section>
     </main>
     
     <footer>
-        <p>&copy; 2026 tda45. Tüm hakları saklıdır.</p>
-        <p>
+        <p>&copy; 2024 Comper Engine SDK. Tüm hakları saklıdır.</p>
+        <p style="margin-top: 1rem;">
             <a href="https://github.com/tda45/comper-engine" style="color: var(--primary-red);">GitHub</a> | 
-            <a href="https://docs.comper.engine" style="color: var(--primary-red);">Dokümantasyon</a> | 
+            <a href="https://github.com/tda45/comper-engine/blob/main/LICENSE" style="color: var(--primary-red);">License</a> | 
+            <a href="https://github.com/tda45/comper-engine/issues" style="color: var(--primary-red);">Support</a>
         </p>
     </footer>
     
@@ -698,33 +537,13 @@ if (download->IsDownloading()) {
             observer.observe(section);
         });
         
-        // Add hover effect to SDK sections
-        const sdkSections = document.querySelectorAll('.sdk-section');
-        sdkSections.forEach(section => {
-            section.addEventListener('mouseenter', () => {
-                section.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            
-            section.addEventListener('mouseleave', () => {
-                section.style.transform = 'translateY(0) scale(1)';
+        // Add pulse animation to stat numbers
+        document.addEventListener('DOMContentLoaded', () => {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                stat.classList.add('pulse');
             });
         });
-        
-        // Dynamic neon glow effect
-        let glowIntensity = 0.8;
-        let glowDirection = 1;
-        
-        function animateGlow() {
-            glowIntensity += 0.01 * glowDirection;
-            if (glowIntensity >= 1.0 || glowIntensity <= 0.6) {
-                glowDirection *= -1;
-            }
-            
-            document.documentElement.style.setProperty('--neon-glow-intensity', glowIntensity);
-            requestAnimationFrame(animateGlow);
-        }
-        
-        animateGlow();
     </script>
 </body>
 </html>

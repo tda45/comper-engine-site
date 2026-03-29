@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comper Engine SDK - Network API</title>
+    
+    <!-- Night Red Ultra Theme Styles -->
+    <style>
+        :root {
+            --primary-red: #E60000;
+            --dark-bg: #050505;
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --surface-dark: #1A1A1A;
+            --neon-glow: #FF0033;
+            --border-red: #CC0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-red), 
+                        0 0 20px var(--primary-red), 
+                        0 0 30px var(--neon-glow);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.8),
+                        inset 0 0 15px rgba(230, 0, 0, 0.3);
+        }
+        
+        .neon-button {
+            background: linear-gradient(135deg, var(--primary-red), var(--border-red));
+            color: var(--text-white);
+            border: 2px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+        }
+        
+        .neon-button:hover {
+            background: linear-gradient(135deg, var(--neon-glow), var(--primary-red));
+            box-shadow: 0 0 30px rgba(255, 0, 51, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(180deg, var(--surface-dark), var(--dark-bg));
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-glow), var(--primary-red), var(--border-red), var(--neon-glow));
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--surface-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        nav a.active {
+            background: var(--primary-red);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary-red), var(--neon-glow), var(--border-red));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--neon-glow);
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        /* API Documentation Styles */
+        .api-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .api-signature {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--neon-glow);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .api-description {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .api-parameters {
+            margin: 1rem 0;
+        }
+        
+        .parameter {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .parameter-name {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .parameter-type {
+            color: var(--neon-glow);
+            font-style: italic;
+        }
+        
+        .parameter-description {
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-glow">Comper Engine SDK</h1>
+        <p class="subtitle">Network API Documentation</p>
+        <a href="../index.html" class="neon-button">← Ana Sayfa</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview" class="active">Genel Bakış</a></li>
+            <li><a href="#networkrequest">NetworkRequest</a></li>
+            <li><a href="#networkresponse">NetworkResponse</a></li>
+            <li><a href="#networkmanager">NetworkManager</a></li>
+            <li><a href="#examples">Örnekler</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview" class="fade-in">
+            <h2 class="neon-glow">Network API Genel Bakış</h2>
+            <p>Comper Engine Network API, HTTP/HTTPS istekleri, WebSocket bağlantıları ve ağ yönetimi için güçlü bir arayüz sağlar.</p>
+            
+            <div class="api-section">
+                <h3>Temel Kullanım</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_network.h"
+
+using namespace ComperCore;
+
+int main() {
+    NetworkManager network;
+    
+    // Network manager'ı başlat
+    if (network.Initialize()) {
+        // Senkron GET isteği
+        NetworkResponse response = network.Get("https://api.example.com/data");
+        
+        if (response.IsSuccess()) {
+            std::cout << "Response: " << response.body << std::endl;
+            std::cout << "Status: " << response.status_code << std::endl;
+        }
+        
+        // Asenkron GET isteği
+        network.AsyncGet("https://api.example.com/async", 
+            [](const NetworkResponse& response) {
+                if (response.IsSuccess()) {
+                    std::cout << "Async response: " << response.body << std::endl;
+                }
+            });
+        
+        // POST isteği
+        std::string post_data = R"({"key": "value"})";
+        NetworkResponse post_response = network.Post("https://api.example.com/submit", post_data);
+        
+        // Event loop (basit)
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="networkrequest" class="fade-in">
+            <h2 class="neon-glow">NetworkRequest Sınıfı</h2>
+            <p>HTTP isteği için kullanılan veri yapısı.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">struct NetworkRequest</div>
+                <div class="api-description">
+                    HTTP isteği için gerekli tüm bilgileri içerir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">İstek URL'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">method:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">HTTP metodu (GET, POST, PUT, DELETE)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">headers:</div>
+                        <div class="parameter-type">std::map&lt;std::string, std::string&gt;</div>
+                        <div class="parameter-description">HTTP header'ları</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">body:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">İstek body'si (POST için)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">timeout:</div>
+                        <div class="parameter-type">int</div>
+                        <div class="parameter-description">Zaman aşımı süresi (saniye)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">user_agent:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">User-Agent string'i</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="networkresponse" class="fade-in">
+            <h2 class="neon-glow">NetworkResponse Sınıfı</h2>
+            <p>HTTP yanıtı için kullanılan veri yapısı.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">struct NetworkResponse</div>
+                <div class="api-description">
+                    HTTP yanıtı için gerekli tüm bilgileri içerir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">status_code:</div>
+                        <div class="parameter-type">int</div>
+                        <div class="parameter-description">HTTP durum kodu (200, 404, 500)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">body:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Yanıt body'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">headers:</div>
+                        <div class="parameter-type">std::map&lt;std::string, std::string&gt;</div>
+                        <div class="parameter-description">Yanıt header'ları</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">content_type:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Content-Type header'ı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">content_length:</div>
+                        <div class="parameter-type">size_t</div>
+                        <div class="parameter-description">Content-Length header'ı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">error_message:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Hata mesajı (varsa)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool IsSuccess() const</div>
+                <div class="api-description">
+                    Yanıtın başarılı olup olmadığını kontrol eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="networkmanager" class="fade-in">
+            <h2 class="neon-glow">NetworkManager Sınıfı</h2>
+            <p>Network işlemlerini yöneten ana sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Initialize()</div>
+                <div class="api-description">
+                    Network Manager'ı başlatır. Bağlantı havuzu ve diğer ağ bileşenlerini kurar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">NetworkResponse Get(const std::string& url)</div>
+                <div class="api-description">
+                    Belirtilen URL'e senkron HTTP GET isteği gönderir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İstek gönderilecek URL</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">NetworkResponse nesnesi</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void AsyncGet(const std::string& url, std::function&lt;void(const NetworkResponse&)&gt; callback)</div>
+                <div class="api-description">
+                    Belirtilen URL'e asenkron HTTP GET isteği gönderir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İstek gönderilecek URL</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">callback:</div>
+                        <div class="parameter-type">std::function&lt;void(const NetworkResponse&)&gt;</div>
+                        <div class="parameter-description">İstek tamamlandığında çağrılacak fonksiyon</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">NetworkResponse Post(const std::string& url, const std::string& data)</div>
+                <div class="api-description">
+                    Belirtilen URL'e senkron HTTP POST isteği gönderir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İstek gönderilecek URL</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">data:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Gönderilecek veri</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">NetworkResponse nesnesi</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void AsyncPost(const std::string& url, const std::string& data, std::function&lt;void(const NetworkResponse&)&gt; callback)</div>
+                <div class="api-description">
+                    Belirtilen URL'e asenkron HTTP POST isteği gönderir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İstek gönderilecek URL</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">data:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Gönderilecek veri</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">callback:</div>
+                        <div class="parameter-type">std::function&lt;void(const NetworkResponse&)&gt;</div>
+                        <div class="parameter-description">İstek tamamlandığında çağrılacak fonksiyon</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetDefaultHeaders(const std::map&lt;std::string, std::string&gt;& headers)</div>
+                <div class="api-description">
+                    Tüm istekler için varsayılan header'ları ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">headers:</div>
+                        <div class="parameter-type">const std::map&lt;std::string, std::string&gt;&</div>
+                        <div class="parameter-description">Varsayılan header'lar</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetTimeout(int timeout_seconds)</div>
+                <div class="api-description">
+                    Tüm istekler için varsayılan zaman aşımını ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">timeout_seconds:</div>
+                        <div class="parameter-type">int</div>
+                        <div class="parameter-description">Zaman aşımı süresi (saniye)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetUserAgent(const std::string& user_agent)</div>
+                <div class="api-description">
+                    Tüm istekler için User-Agent header'ını ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">user_agent:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">User-Agent string'i</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="examples" class="fade-in">
+            <h2 class="neon-glow">Örnekler</h2>
+            <p>Network API kullanımı için pratik örnekler.</p>
+            
+            <div class="api-section">
+                <h3>Basik API Kullanımı</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_network.h"
+
+using namespace ComperCore;
+
+int main() {
+    NetworkManager network;
+    
+    // Network manager'ı başlat
+    if (network.Initialize()) {
+        // Varsayılan ayarlar
+        network.SetTimeout(30); // 30 saniye timeout
+        network.SetUserAgent("ComperEngine/1.0");
+        
+        // Header'ları ayarla
+        std::map&lt;std::string, std::string&gt; headers = {
+            {"Accept", "application/json"},
+            {"Authorization", "Bearer token123"}
+        };
+        network.SetDefaultHeaders(headers);
+        
+        // GET isteği
+        NetworkResponse response = network.Get("https://api.example.com/users");
+        
+        if (response.IsSuccess()) {
+            std::cout << "Users: " << response.body << std::endl;
+        } else {
+            std::cout << "Error: " << response.error_message << std::endl;
+        }
+        
+        // POST isteği
+        std::string user_data = R"({"name": "John", "email": "john@example.com"})";
+        NetworkResponse post_response = network.Post("https://api.example.com/users", user_data);
+        
+        if (post_response.IsSuccess()) {
+            std::cout << "User created: " << post_response.body << std::endl;
+        }
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>Asenkron İstekler</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_network.h"
+
+using namespace ComperCore;
+
+int main() {
+    NetworkManager network;
+    
+    if (network.Initialize()) {
+        // Asenkron GET isteği
+        network.AsyncGet("https://api.example.com/data", 
+            [](const NetworkResponse& response) {
+                if (response.IsSuccess()) {
+                    std::cout << "Data received: " << response.body << std::endl;
+                } else {
+                    std::cout << "Error: " << response.error_message << std::endl;
+                }
+            });
+        
+        // Asenkron POST isteği
+        std::string post_data = R"({"action": "update"})";
+        network.AsyncPost("https://api.example.com/update", post_data,
+            [](const NetworkResponse& response) {
+                if (response.IsSuccess()) {
+                    std::cout << "Update successful: " << response.body << std::endl;
+                } else {
+                    std::cout << "Update failed: " << response.error_message << std::endl;
+                }
+            });
+        
+        // Event loop (basit)
+        std::this_thread::sleep_for(std::chrono::seconds(10));
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>JSON API Entegrasyonu</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_network.h"
+#include <nlohmann/json.hpp>
+
+using namespace ComperCore;
+using json = nlohmann::json;
+
+int main() {
+    NetworkManager network;
+    
+    if (network.Initialize()) {
+        // JSON header'ı
+        network.SetDefaultHeaders({
+            {"Content-Type", "application/json"},
+            {"Accept", "application/json"}
+        });
+        
+        // JSON verisi gönder
+        json request_data = {
+            {"query", "Comper Engine"},
+            {"limit", 10},
+            {"filters", {"browser", "sdk"}}
+        };
+        
+        std::string json_string = request_data.dump();
+        NetworkResponse response = network.Post("https://api.example.com/search", json_string);
+        
+        if (response.IsSuccess()) {
+            try {
+                // JSON yanıtı parse et
+                json response_json = json::parse(response.body);
+                
+                if (response_json.contains("results")) {
+                    auto results = response_json["results"];
+                    std::cout << "Found " << results.size() << " results:" << std::endl;
+                    
+                    for (const auto& result : results) {
+                        std::cout << "- " << result["title"] << std::endl;
+                        std::cout << "  " << result["url"] << std::endl;
+                    }
+                }
+            } catch (const json::exception& e) {
+                std::cout << "JSON parse error: " << e.what() << std::endl;
+            }
+        }
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>File Download</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_network.h"
+#include <fstream>
+
+using namespace ComperCore;
+
+int main() {
+    NetworkManager network;
+    
+    if (network.Initialize()) {
+        // Dosya indir
+        std::string file_url = "https://example.com/file.pdf";
+        NetworkResponse response = network.Get(file_url);
+        
+        if (response.IsSuccess()) {
+            // Dosyaya yaz
+            std::ofstream file("downloaded_file.pdf", std::ios::binary);
+            if (file.is_open()) {
+                file.write(response.body.c_str(), response.body.size());
+                file.close();
+                std::cout << "File downloaded successfully!" << std::endl;
+                std::cout << "Size: " << response.content_length << " bytes" << std::endl;
+            } else {
+                std::cout << "Failed to create file!" << std::endl;
+            }
+        } else {
+            std::cout << "Download failed: " << response.error_message << std::endl;
+        }
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 tda45. Tüm hakları saklıdır.</p>
+        <p>
+            <a href="../index.html" style="color: var(--primary-red);">← Ana Sayfa</a> | 
+            <a href="core.html" style="color: var(--primary-red);">Core API</a> | 
+            <a href="render.html" style="color: var(--primary-red);">Render API</a> | 
+            <a href="html.html" style="color: var(--primary-red);">HTML API</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

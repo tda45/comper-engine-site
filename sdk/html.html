@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comper Engine SDK - HTML API</title>
+    
+    <!-- Night Red Ultra Theme Styles -->
+    <style>
+        :root {
+            --primary-red: #E60000;
+            --dark-bg: #050505;
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --surface-dark: #1A1A1A;
+            --neon-glow: #FF0033;
+            --border-red: #CC0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-red), 
+                        0 0 20px var(--primary-red), 
+                        0 0 30px var(--neon-glow);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.8),
+                        inset 0 0 15px rgba(230, 0, 0, 0.3);
+        }
+        
+        .neon-button {
+            background: linear-gradient(135deg, var(--primary-red), var(--border-red));
+            color: var(--text-white);
+            border: 2px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+        }
+        
+        .neon-button:hover {
+            background: linear-gradient(135deg, var(--neon-glow), var(--primary-red));
+            box-shadow: 0 0 30px rgba(255, 0, 51, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(180deg, var(--surface-dark), var(--dark-bg));
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-glow), var(--primary-red), var(--border-red), var(--neon-glow));
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--surface-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        nav a.active {
+            background: var(--primary-red);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary-red), var(--neon-glow), var(--border-red));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--neon-glow);
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        /* API Documentation Styles */
+        .api-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .api-signature {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--neon-glow);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .api-description {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .api-parameters {
+            margin: 1rem 0;
+        }
+        
+        .parameter {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .parameter-name {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .parameter-type {
+            color: var(--neon-glow);
+            font-style: italic;
+        }
+        
+        .parameter-description {
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-glow">Comper Engine SDK</h1>
+        <p class="subtitle">HTML API Documentation</p>
+        <a href="../index.html" class="neon-button">← Ana Sayfa</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview" class="active">Genel Bakış</a></li>
+            <li><a href="#htmlparser">HTMLParser</a></li>
+            <li><a href="#dom">DOM</a></li>
+            <li><a href="#cssparser">CSSParser</a></li>
+            <li><a href="#layoutengine">LayoutEngine</a></li>
+            <li><a href="#examples">Örnekler</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview" class="fade-in">
+            <h2 class="neon-glow">HTML API Genel Bakış</h2>
+            <p>Comper Engine HTML API, HTML5 parsing, DOM manipulation, CSS processing ve layout engine için güçlü bir arayüz sağlar.</p>
+            
+            <div class="api-section">
+                <h3>Temel Kullanım</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_html.h"
+
+using namespace ComperCore;
+
+int main() {
+    HTMLParser parser;
+    
+    // HTML parse et
+    std::string html = R"(
+        &lt;!DOCTYPE html&gt;
+        &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;Comper Engine Demo&lt;/title&gt;
+            &lt;style&gt;
+                body { font-family: Arial, sans-serif; }
+                .container { max-width: 800px; margin: 0 auto; }
+                .header { background: #E60000; color: white; padding: 20px; }
+            &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div class="container"&gt;
+                &lt;div class="header"&gt;
+                    &lt;h1&gt;Hello Comper Engine!&lt;/h1&gt;
+                    &lt;p&gt;Modern HTML parsing demo&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+    )";
+    
+    auto document = parser.Parse(html);
+    
+    if (document) {
+        std::cout << "HTML parsed successfully!" << std::endl;
+        
+        // Element seçimi
+        auto header = document->QuerySelector(".header h1");
+        if (header) {
+            std::cout << "Header text: " << header->GetTextContent() << std::endl;
+        }
+        
+        // Yeni element oluşturma
+        auto new_div = document->CreateElement("div");
+        new_div->SetAttribute("class", "dynamic-content");
+        new_div->SetTextContent("Dinamik içerik");
+        
+        // Document'e ekle
+        auto container = document->QuerySelector(".container");
+        if (container) {
+            container->AppendChild(new_div);
+        }
+        
+        // CSS parse et
+        CSSParser css_parser;
+        std::string css = R"(
+            .dynamic-content {
+                background: linear-gradient(45deg, #FF0033, #E60000);
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 10px 0;
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.7; }
+                100% { opacity: 1; }
+            }
+        )";
+        
+        auto stylesheet = css_parser.Parse(css);
+        
+        // Layout engine ile render et
+        LayoutEngine layout_engine;
+        layout_engine.SetDocument(document);
+        layout_engine.SetStylesheet(stylesheet);
+        layout_engine.CalculateLayout();
+        
+        std::cout << "Layout calculated!" << std::endl;
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="htmlparser" class="fade-in">
+            <h2 class="neon-glow">HTMLParser Sınıfı</h2>
+            <p>HTML5 parsing için kullanılan ana sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">std::shared_ptr&lt;DOMDocument&gt; Parse(const std::string& html)</div>
+                <div class="api-description">
+                    HTML string'ini DOM dokümanına parse eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">html:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Parse edilecek HTML string'i</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">DOM dokümanının shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetStrictMode(bool strict)</div>
+                <div class="api-description">
+                    Strict parsing modunu ayarlar. Hatalı HTML'de hata verir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">strict:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Strict modu aktif eder</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetPreserveWhitespace(bool preserve)</div>
+                <div class="api-description">
+                    Boşluk karakterlerini koruma modunu ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">preserve:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Boşlukları korur</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetCaseSensitive(bool case_sensitive)</div>
+                <div class="api-description">
+                    Case-sensitive parsing modunu ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">case_sensitive:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Case-sensitive modu aktif eder</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="dom" class="fade-in">
+            <h2 class="neon-glow">DOM Sınıfları</h2>
+            <p>Document Object Model (DOM) için kullanılan sınıflar.</p>
+            
+            <div class="api-section">
+                <h3>DOMDocument Sınıfı</h3>
+                <div class="api-signature">class DOMDocument : public DOMNode</div>
+                <div class="api-description">
+                    HTML dokümanını temsil eden ana sınıf.
+                </div>
+                
+                <div class="api-signature">std::shared_ptr&lt;DOMElement&gt; CreateElement(const std::string& tag)</div>
+                <div class="api-description">
+                    Yeni DOM element'i oluşturur.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">tag:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Element tag'i (örn: "div", "p", "span")</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">DOM element'inin shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::shared_ptr&lt;DOMText&gt; CreateTextNode(const std::string& text)</div>
+                <div class="api-description">
+                    Yeni DOM text node'u oluşturur.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">text:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Text node'unun içeriği</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">DOM text node'unun shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::shared_ptr&lt;DOMNode&gt; QuerySelector(const std::string& selector)</div>
+                <div class="api-description">
+                    CSS selector ile element arar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">selector:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">CSS selector (örn: "#id", ".class", "tag")</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Eşleşen node'un shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::vector&lt;std::shared_ptr&lt;DOMNode&gt;&gt; QuerySelectorAll(const std::string& selector)</div>
+                <div class="api-description">
+                    CSS selector ile tüm eşleşen elementleri arar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">selector:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">CSS selector</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Eşleşen node'ların vektörü</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+            <div class="api-section">
+                <h3>DOMElement Sınıfı</h3>
+                <div class="api-signature">class DOMElement : public DOMNode</div>
+                <div class="api-description">
+                    DOM element'ini temsil eden sınıf.
+                </div>
+                
+                <div class="api-signature">void SetAttribute(const std::string& name, const std::string& value)</div>
+                <div class="api-description">
+                    Element attribute'unu ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">name:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Attribute adı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">value:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Attribute değeri</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetAttribute(const std::string& name) const</div>
+                <div class="api-description">
+                    Element attribute'unun değerini alır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">name:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Attribute adı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Attribute değeri</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetTextContent(const std::string& text)</div>
+                <div class="api-description">
+                    Element'in metin içeriğini ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">text:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Metin içeriği</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetTextContent() const</div>
+                <div class="api-description">
+                    Element'in metin içeriğini alır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Metin içeriği</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void AppendChild(std::shared_ptr&lt;DOMNode&gt; child)</div>
+                <div class="api-description">
+                    Element'e child node ekler.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">child:</div>
+                        <div class="parameter-type">std::shared_ptr&lt;DOMNode&gt;</div>
+                        <div class="parameter-description">Eklenecek child node</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void RemoveChild(std::shared_ptr&lt;DOMNode&gt; child)</div>
+                <div class="api-description">
+                    Element'ten child node'u kaldırır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">child:</div>
+                        <div class="parameter-type">std::shared_ptr&lt;DOMNode&gt;</div>
+                        <div class="parameter-description">Kaldırılacak child node</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="cssparser" class="fade-in">
+            <h2 class="neon-glow">CSSParser Sınıfı</h2>
+            <p>CSS3 parsing ve stil işlemesi için kullanılan sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">std::shared_ptr&lt;CSSStylesheet&gt; Parse(const std::string& css)</div>
+                <div class="api-description">
+                    CSS string'ini stylesheet'e parse eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">css:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Parse edilecek CSS string'i</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">CSSStylesheet'in shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetStrictMode(bool strict)</div>
+                <div class="api-description">
+                    Strict CSS parsing modunu ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">strict:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Strict modu aktif eder</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="layoutengine" class="fade-in">
+            <h2 class="neon-glow">LayoutEngine Sınıfı</h2>
+            <p>CSS layout ve positioning için kullanılan sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetDocument(std::shared_ptr&lt;DOMDocument&gt; document)</div>
+                <div class="api-description">
+                    Layout için DOM dokümanını ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">document:</div>
+                        <div class="parameter-type">std::shared_ptr&lt;DOMDocument&gt;</div>
+                        <div class="parameter-description">Layout edilecek DOM dokümanı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetStylesheet(std::shared_ptr&lt;CSSStylesheet&gt; stylesheet)</div>
+                <div class="api-description">
+                    Layout için CSS stylesheet'ini ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">stylesheet:</div>
+                        <div class="parameter-type">std::shared_ptr&lt;CSSStylesheet&gt;</div>
+                        <div class="parameter-description">Uygulanacak CSS stylesheet'i</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void CalculateLayout()</div>
+                <div class="api-description">
+                    Element'lerin layout'unu hesaplar.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetViewportSize(int width, int height)</div>
+                <div class="api-description">
+                    Viewport boyutunu ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">width, height:</div>
+                        <div class="parameter-type">int</div>
+                        <div class="parameter-description">Viewport boyutu</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">Rectangle GetElementBounds(std::shared_ptr&lt;DOMElement&gt; element)</div>
+                <div class="api-description">
+                    Element'in sınırlarını hesaplar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">element:</div>
+                        <div class="parameter-type">std::shared_ptr&lt;DOMElement&gt;</div>
+                        <div class="parameter-description">Sınırları hesaplanacak element</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Element'in sınırları</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="examples" class="fade-in">
+            <h2 class="neon-glow">Örnekler</h2>
+            <p>HTML API kullanımı için pratik örnekler.</p>
+            
+            <div class="api-section">
+                <h3>DOM Manipülasyonu</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_html.h"
+
+using namespace ComperCore;
+
+int main() {
+    HTMLParser parser;
+    
+    // HTML parse et
+    std::string html = R"(
+        &lt;div id="container"&gt;
+            &lt;h1&gt;Original Title&lt;/h1&gt;
+            &lt;p&gt;Original content&lt;/p&gt;
+        &lt;/div&gt;
+    )";
+    
+    auto document = parser.Parse(html);
+    
+    if (document) {
+        // Element seçimi
+        auto container = document->QuerySelector("#container");
+        if (container) {
+            // Başlığı değiştir
+            auto h1 = container->QuerySelector("h1");
+            if (h1) {
+                h1->SetTextContent("Updated Title!");
+                h1->SetAttribute("style", "color: #E60000;");
+            }
+            
+            // Yeni paragraf ekle
+            auto p = document->CreateElement("p");
+            p->SetTextContent("Dinamik olarak eklenen paragraf!");
+            p->SetAttribute("class", "dynamic");
+            
+            container->AppendChild(p);
+            
+            // Element'i kaldır
+            auto old_p = container->QuerySelector("p");
+            if (old_p) {
+                container->RemoveChild(old_p);
+            }
+            
+            std::cout << "DOM manipulation completed!" << std::endl;
+        }
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>CSS Entegrasyonu</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_html.h"
+
+using namespace ComperCore;
+
+int main() {
+    HTMLParser parser;
+    CSSParser css_parser;
+    
+    // HTML parse et
+    std::string html = R"(
+        &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;CSS Integration Demo&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div class="container"&gt;
+                &lt;div class="header"&gt;
+                    &lt;h1&gt;Styled Header&lt;/h1&gt;
+                &lt;/div&gt;
+                &lt;div class="content"&gt;
+                    &lt;p&gt;Styled content&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+    )";
+    
+    auto document = parser.Parse(html);
+    
+    // CSS parse et
+    std::string css = R"(
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #E60000, #FF0033);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .content {
+            background: #1A1A1A;
+            color: #CCCCCC;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 1px solid #E60000;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            text-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+    )";
+    
+    auto stylesheet = css_parser.Parse(css);
+    
+    if (document && stylesheet) {
+        // Layout engine'i kur
+        LayoutEngine layout_engine;
+        layout_engine.SetDocument(document);
+        layout_engine.SetStylesheet(stylesheet);
+        layout_engine.SetViewportSize(1024, 768);
+        
+        // Layout'u hesapla
+        layout_engine.CalculateLayout();
+        
+        std::cout << "CSS integration completed!" << std::endl;
+        
+        // Element stillerini kontrol et
+        auto header = document->QuerySelector(".header");
+        if (header) {
+            auto style = header->GetComputedStyle();
+            std::cout << "Header background: " << style->background_color.ToString() << std::endl;
+            std::cout << "Header text color: " << style->color.ToString() << std::endl;
+        }
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>Dinamik Web Sayfası Oluşturma</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_html.h"
+
+using namespace ComperCore;
+
+class DynamicWebPage {
+private:
+    HTMLParser parser;
+    CSSParser css_parser;
+    LayoutEngine layout_engine;
+    std::shared_ptr&lt;DOMDocument&gt; document;
+    
+public:
+    bool Initialize() {
+        // Boş doküman oluştur
+        document = std::make_shared&lt;DOMDocument&gt;();
+        
+        // Layout engine'i kur
+        layout_engine.SetDocument(document);
+        layout_engine.SetViewportSize(1024, 768);
+        
+        return true;
+    }
+    
+    void CreatePage() {
+        // HTML yapısı oluştur
+        auto html = document->CreateElement("html");
+        auto head = document->CreateElement("head");
+        auto body = document->CreateElement("body");
+        
+        // Head element'leri
+        auto title = document->CreateElement("title");
+        title->SetTextContent("Dynamic Web Page");
+        
+        auto style = document->CreateElement("style");
+        std::string css = R"(
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #050505, #1A1A1A);
+                color: #FFFFFF;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 40px 20px;
+            }
+            
+            .header {
+                text-align: center;
+                margin-bottom: 40px;
+                padding: 30px;
+                background: linear-gradient(45deg, #E60000, #FF0033);
+                border-radius: 12px;
+                box-shadow: 0 8px 16px rgba(230, 0, 0, 0.3);
+            }
+            
+            .content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .card {
+                background: #1A1A1A;
+                border: 1px solid #E60000;
+                border-radius: 8px;
+                padding: 20px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(230, 0, 0, 0.4);
+                border-color: #FF0033;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+                margin: 0;
+                text-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+                color: #E60000;
+                margin: 0 0 10px 0;
+            }
+            
+            p {
+                color: #CCCCCC;
+                line-height: 1.6;
+                margin: 10px 0;
+            }
+            
+            .footer {
+                text-align: center;
+                padding: 20px;
+                border-top: 1px solid #E60000;
+                margin-top: 40px;
+                color: #999999;
+            }
+        )";
+        style->SetTextContent(css);
+        
+        // Head'i oluştur
+        head->AppendChild(title);
+        head->AppendChild(style);
+        html->AppendChild(head);
+        
+        // Body'i oluştur
+        auto container = document->CreateElement("div");
+        container->SetAttribute("class", "container");
+        
+        // Header
+        auto header = document->CreateElement("div");
+        header->SetAttribute("class", "header");
+        
+        auto h1 = document->CreateElement("h1");
+        h1->SetTextContent("Comper Engine SDK");
+        header->AppendChild(h1);
+        
+        container->AppendChild(header);
+        
+        // Content
+        auto content = document->CreateElement("div");
+        content->SetAttribute("class", "content");
+        
+        // Kartlar oluştur
+        for (int i = 1; i <= 4; ++i) {
+            auto card = document->CreateElement("div");
+            card->SetAttribute("class", "card");
+            
+            auto h2 = document->CreateElement("h2");
+            h2->SetTextContent("Özellik " + std::to_string(i));
+            
+            auto p = document->CreateElement("p");
+            p->SetTextContent("Bu özellik Comper Engine SDK'nin sunduğu harika bir yetenektir. Modern web teknolojileri ile entegre çalışır.");
+            
+            card->AppendChild(h2);
+            card->AppendChild(p);
+            content->AppendChild(card);
+        }
+        
+        container->AppendChild(content);
+        
+        // Footer
+        auto footer = document->CreateElement("div");
+        footer->SetAttribute("class", "footer");
+        
+        auto footer_p = document->CreateElement("p");
+        footer_p->SetTextContent("© 2024 Comper Engine SDK - Professional Browser Development Kit");
+        
+        footer->AppendChild(footer_p);
+        container->AppendChild(footer);
+        
+        body->AppendChild(container);
+        html->AppendChild(body);
+        
+        // Document'i ayarla
+        document->AppendChild(html);
+        
+        // CSS'i parse et ve uygula
+        auto stylesheet = css_parser.Parse(css);
+        layout_engine.SetStylesheet(stylesheet);
+        
+        // Layout'u hesapla
+        layout_engine.CalculateLayout();
+        
+        std::cout << "Dynamic web page created!" << std::endl;
+    }
+    
+    std::string GetHTML() {
+        // Generate HTML string from DOM
+        if (document) {
+            return document->ToString();
+        }
+        return "";
+    }
+};
+
+int main() {
+    DynamicWebPage webpage;
+    
+    if (webpage.Initialize()) {
+        webpage.CreatePage();
+        
+        // Oluşturulan HTML'i göster
+        std::cout << "Generated HTML:" << std::endl;
+        std::cout << webpage.GetHTML() << std::endl;
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 tda45. Tüm hakları saklıdır.</p>
+        <p>
+            <a href="../index.html" style="color: var(--primary-red);">← Ana Sayfa</a> | 
+            <a href="core.html" style="color: var(--primary-red);">Core API</a> | 
+            <a href="network.html" style="color: var(--primary-red);">Network API</a> | 
+            <a href="render.html" style="color: var(--primary-red);">Render API</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

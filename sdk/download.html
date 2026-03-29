@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comper Engine SDK - Download API</title>
+    
+    <!-- Night Red Ultra Theme Styles -->
+    <style>
+        :root {
+            --primary-red: #E60000;
+            --dark-bg: #050505;
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --surface-dark: #1A1A1A;
+            --neon-glow: #FF0033;
+            --border-red: #CC0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-red), 
+                        0 0 20px var(--primary-red), 
+                        0 0 30px var(--neon-glow);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.8),
+                        inset 0 0 15px rgba(230, 0, 0, 0.3);
+        }
+        
+        .neon-button {
+            background: linear-gradient(135deg, var(--primary-red), var(--border-red));
+            color: var(--text-white);
+            border: 2px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+        }
+        
+        .neon-button:hover {
+            background: linear-gradient(135deg, var(--neon-glow), var(--primary-red));
+            box-shadow: 0 0 30px rgba(255, 0, 51, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(180deg, var(--surface-dark), var(--dark-bg));
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-glow), var(--primary-red), var(--border-red), var(--neon-glow));
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--surface-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        nav a.active {
+            background: var(--primary-red);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary-red), var(--neon-glow), var(--border-red));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--neon-glow);
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        /* API Documentation Styles */
+        .api-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--dark-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-red);
+        }
+        
+        .api-signature {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--neon-glow);
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .api-description {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        
+        .api-parameters {
+            margin: 1rem 0;
+        }
+        
+        .parameter {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--surface-dark);
+            border-radius: 4px;
+        }
+        
+        .parameter-name {
+            color: var(--primary-red);
+            font-weight: bold;
+        }
+        
+        .parameter-type {
+            color: var(--neon-glow);
+            font-style: italic;
+        }
+        
+        .parameter-description {
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-glow">Comper Engine SDK</h1>
+        <p class="subtitle">Download API Documentation</p>
+        <a href="../index.html" class="neon-button">← Ana Sayfa</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview" class="active">Genel Bakış</a></li>
+            <li><a href="#downloadmanager">DownloadManager</a></li>
+            <li><a href="#downloaditem">DownloadItem</a></li>
+            <li><a href="#downloadpage">DownloadPage</a></li>
+            <li><a href="#examples">Örnekler</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview" class="fade-in">
+            <h2 class="neon-glow">Download API Genel Bakış</h2>
+            <p>Comper Engine Download API, multi-threaded indirme yönetimi, pause/resume desteği ve güvenlik kontrolleri için güçlü bir arayüz sağlar.</p>
+            
+            <div class="api-section">
+                <h3>Temel Kullanım</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_download.h"
+
+using namespace ComperCore;
+
+int main() {
+    DownloadManager download_manager;
+    
+    // Download manager'ı başlat
+    if (download_manager.Initialize()) {
+        // İndirme ekleme
+        std::string download_id = download_manager.AddDownload(
+            "https://example.com/largefile.zip", 
+            "download.zip", 
+            DownloadPriority::HIGH
+        );
+        
+        // Progress takibi
+        download_manager.on_download_progress = 
+            [](const DownloadItem& download) {
+                std::cout << "Progress: " 
+                          << download.GetFormattedProgress() 
+                          << " (" << download.GetSpeedFormatted() << ")" << std::endl;
+            };
+        
+        // Tamamlanma olayı
+        download_manager.on_download_completed = 
+            [](const DownloadItem& download) {
+                std::cout << "Download completed: " << download.filename << std::endl;
+            };
+        
+        // İndirme kontrolü
+        auto download = download_manager.GetDownload(download_id);
+        if (download && download->IsDownloading()) {
+            // Pause/Resume test
+            download->Pause();
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            download->Resume();
+        }
+        
+        // Event loop
+        download_manager.RunEventLoop();
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="downloadmanager" class="fade-in">
+            <h2 class="neon-glow">DownloadManager Sınıfı</h2>
+            <p>Multi-threaded indirme yönetimi için ana sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Initialize()</div>
+                <div class="api-description">
+                    Download manager'ı başlatır. Thread havuzu ve diğer bileşenleri kurar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void Shutdown()</div>
+                <div class="api-description">
+                    Download manager'ı güvenli bir şekilde kapatır. Tüm indirmeleri durdurur ve kaynakları serbest bırakır.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string AddDownload(const std::string& url, const std::string& filename, DownloadPriority priority = DownloadPriority::NORMAL)</div>
+                <div class="api-description">
+                    Yeni indirme ekler.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İndirilecek dosyanın URL'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">filename:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Kaydedilecek dosya adı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">priority:</div>
+                        <div class="parameter-type">DownloadPriority</div>
+                        <div class="parameter-description">İndirme önceliği (LOW, NORMAL, HIGH, URGENT)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Eklenen indirmenin ID'si</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool RemoveDownload(const std::string& download_id)</div>
+                <div class="api-description">
+                    Belirtilen indirmeyi kaldırır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">download_id:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Kaldırılacak indirmenin ID'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::shared_ptr&lt;DownloadItem&gt; GetDownload(const std::string& download_id)</div>
+                <div class="api-description">
+                    Belirtilen indirmeyi alır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">download_id:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">Alınacak indirmenin ID'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">İndirme nesnesinin shared pointer'ı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::vector&lt;std::shared_ptr&lt;DownloadItem&gt;&gt; GetAllDownloads()</div>
+                <div class="api-description">
+                    Tüm indirmeleri alır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Tüm indirme nesnelerinin vektörü</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void PauseAllDownloads()</div>
+                <div class="api-description">
+                    Tüm indirmeleri duraklatır.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void ResumeAllDownloads()</div>
+                <div class="api-description">
+                    Tüm duraklatılmış indirmeleri devam ettirir.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void CancelAllDownloads()</div>
+                <div class="api-description">
+                    Tüm indirmeleri iptal eder.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetMaxConcurrentDownloads(int max_downloads)</div>
+                <div class="api-description">
+                    Maksimum eşzamanlı indirme sayısını ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">max_downloads:</div>
+                        <div class="parameter-type">int</div>
+                        <div class="parameter-description">Maksimum indirme sayısı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void SetDownloadDirectory(const std::string& directory)</div>
+                <div class="api-description">
+                    Varsayılan indirme dizinini ayarlar.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">directory:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İndirme dizini</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void RunEventLoop()</div>
+                <div class="api-description">
+                    Download manager event loop'unu başlatır.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">DownloadStatistics GetStatistics() const</div>
+                <div class="api-description">
+                    İndirme istatistiklerini alır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">İndirme istatistikleri</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="downloaditem" class="fade-in">
+            <h2 class="neon-glow">DownloadItem Sınıfı</h2>
+            <p>İndirme öğesi için veri yapısı ve fonksiyonlar.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">struct DownloadItem</div>
+                <div class="api-description">
+                    İndirme öğesi için tüm bilgileri içerir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">id:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">İndirme ID'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">İndirme URL'si</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">filename:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Dosya adı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">file_path:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Dosya yolu</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">total_size:</div>
+                        <div class="parameter-type">int64_t</div>
+                        <div class="parameter-description">Toplam dosya boyutu</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">downloaded_size:</div>
+                        <div class="parameter-type">int64_t</div>
+                        <div class="parameter-description">İndirilen boyut</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">progress:</div>
+                        <div class="parameter-type">float</div>
+                        <div class="parameter-description">İndirme progress'i (0.0 - 1.0)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">speed:</div>
+                        <div class="parameter-type">double</div>
+                        <div class="parameter-description">İndirme hızı (bytes/saniye)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">status:</div>
+                        <div class="parameter-type">DownloadStatus</div>
+                        <div class="parameter-description">İndirme durumu</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">priority:</div>
+                        <div class="parameter-type">DownloadPriority</div>
+                        <div class="parameter-description">İndirme önceliği</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">start_time:</div>
+                        <div class="parameter-type">std::chrono::system_clock::time_point</div>
+                        <div class="parameter-description">Başlangıç zamanı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">end_time:</div>
+                        <div class="parameter-type">std::chrono::system_clock::time_point</div>
+                        <div class="parameter-description">Bitiş zamanı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">error_message:</div>
+                        <div class="parameter-type">std::string</div>
+                        <div class="parameter-description">Hata mesajı (varsa)</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">supports_resume:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Resume desteği var mı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">is_verified:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Dosya doğrulandı mı</div>
+                    </div>
+                    <div class="parameter">
+                        <div class="parameter-name">is_safe:</div>
+                        <div class="parameter-type">bool</div>
+                        <div class="parameter-description">Dosya güvenli mi (malware taraması)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Pause()</div>
+                <div class="api-description">
+                    İndirmeyi duraklatır.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Resume()</div>
+                <div class="api-description">
+                    Duraklatılmış indirmeyi devam ettirir.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Cancel()</div>
+                <div class="api-description">
+                    İndirmeyi iptal eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool Retry()</div>
+                <div class="api-description">
+                    Başarısız indirmeyi tekrar dener.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarılı olursa true, aksi halde false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool IsDownloading() const</div>
+                <div class="api-description">
+                    İndirme devam ediyor mu kontrol eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">İndiriliyorsa true, değilse false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool IsPaused() const</div>
+                <div class="api-description">
+                    İndirme duraklatıldı mı kontrol eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Duraklatıldıysa true, değilse false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool IsCompleted() const</div>
+                <div class="api-description">
+                    İndirme tamamlandı mı kontrol eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Tamamlandıysa true, değilse false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">bool IsFailed() const</div>
+                <div class="api-description">
+                    İndirme başarısız mı kontrol eder.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Başarısızsa true, değilse false</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetFormattedProgress() const</div>
+                <div class="api-description">
+                    Formatlanmış progress string'i döndürür.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Formatlanmış progress (örn: "45.2%")</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetSpeedFormatted() const</div>
+                <div class="api-description">
+                    Formatlanmış hız string'i döndürür.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Formatlanmış hız (örn: "2.5 MB/s")</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetTimeRemainingFormatted() const</div>
+                <div class="api-description">
+                    Formatlanmış kalan süre string'i döndürür.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Formatlanmış kalan süre (örn: "2m 30s")</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">std::string GetFileSizeFormatted() const</div>
+                <div class="api-description">
+                    Formatlanmış dosya boyutu string'i döndürür.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">Dönüş Değeri:</div>
+                        <div class="parameter-description">Formatlanmış dosya boyutu (örn: "125.3 MB")</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="downloadpage" class="fade-in">
+            <h2 class="neon-glow">DownloadPage Sınıfı</h2>
+            <p>İndirme sayfası UI'si için kullanılan sınıf.</p>
+            
+            <div class="api-section">
+                <div class="api-signature">DownloadPage(DownloadManager& manager)</div>
+                <div class="api-description">
+                    DownloadPage sınıfını oluşturur.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">manager:</div>
+                        <div class="parameter-type">DownloadManager&</div>
+                        <div class="parameter-description">Download manager referansı</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void Show()</div>
+                <div class="api-description">
+                    İndirme sayfasını gösterir.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void Hide()</div>
+                <div class="api-description">
+                    İndirme sayfasını gizler.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void Refresh()</div>
+                <div class="api-description">
+                    İndirme sayfasını yeniler.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void AddDownloadFromURL(const std::string& url)</div>
+                <div class="api-description">
+                    URL'den yeni indirme ekler.
+                </div>
+                <div class="api-parameters">
+                    <div class="parameter">
+                        <div class="parameter-name">url:</div>
+                        <div class="parameter-type">const std::string&</div>
+                        <div class="parameter-description">İndirme URL'si</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void ShowAddDownloadDialog()</div>
+                <div class="api-description">
+                    İndirme ekleme dialog'unu gösterir.
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <div class="api-signature">void ShowSettingsDialog()</div>
+                <div class="api-description">
+                    İndirme ayarları dialog'unu gösterir.
+                </div>
+            </div>
+        </section>
+        
+        <section id="examples" class="fade-in">
+            <h2 class="neon-glow">Örnekler</h2>
+            <p>Download API kullanımı için pratik örnekler.</p>
+            
+            <div class="api-section">
+                <h3>Multi-Threaded İndirme Örneği</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_download.h"
+
+using namespace ComperCore;
+
+class MultiThreadedDownloadDemo {
+private:
+    DownloadManager download_manager;
+    
+public:
+    bool Initialize() {
+        if (!download_manager.Initialize()) {
+            return false;
+        }
+        
+        // Konfigürasyon
+        download_manager.SetMaxConcurrentDownloads(4);
+        download_manager.SetDownloadDirectory("./downloads");
+        
+        // Event handlers'ı ayarla
+        SetupEventHandlers();
+        
+        return true;
+    }
+    
+    void RunDemo() {
+        std::cout << "=== Multi-Threaded İndirme Demo ===" << std::endl;
+        
+        // Çoklu indirme ekle
+        std::vector&lt;std::string&gt; urls = {
+            "https://example.com/file1.zip",
+            "https://example.com/file2.zip",
+            "https://example.com/file3.zip",
+            "https://example.com/file4.zip",
+            "https://example.com/file5.zip"
+        };
+        
+        std::vector&lt;std::string&gt; download_ids;
+        
+        std::cout << "\n📥 İndirmeler ekleniyor..." << std::endl;
+        for (size_t i = 0; i < urls.size(); ++i) {
+            std::string filename = "file" + std::to_string(i + 1) + ".zip";
+            DownloadPriority priority = (i < 2) ? DownloadPriority::HIGH : DownloadPriority::NORMAL;
+            
+            std::string download_id = download_manager.AddDownload(urls[i], filename, priority);
+            download_ids.push_back(download_id);
+            
+            std::cout << "İndirme eklendi: " << filename << " (ID: " << download_id << ")" << std::endl;
+        }
+        
+        // İndirme takibi
+        std::cout << "\n⏱️ İndirme takibi başlatıldı..." << std::endl;
+        
+        // Belirli süre sonra bazı işlemler yap
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        
+        // İlk indirmeyi duraklat
+        if (!download_ids.empty()) {
+            auto download = download_manager.GetDownload(download_ids[0]);
+            if (download && download->IsDownloading()) {
+                download->Pause();
+                std::cout << "\n⏸️ İlk indirme duraklatıldı: " << download->filename << std::endl;
+                
+                // 2 saniye sonra devam ettir
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                download->Resume();
+                std::cout << "▶️ İndirme devam ettirildi: " << download->filename << std::endl;
+            }
+        }
+        
+        // İstatistikleri göster
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+        ShowStatistics();
+        
+        // Tüm indirmelerin bitmesini bekle
+        std::cout << "\n⏳ İndirmelerin bitmesi bekleniyor..." << std::endl;
+        while (true) {
+            auto downloads = download_manager.GetAllDownloads();
+            bool all_completed = true;
+            
+            for (const auto& download : downloads) {
+                if (download->IsDownloading() || download->IsPaused()) {
+                    all_completed = false;
+                    break;
+                }
+            }
+            
+            if (all_completed) {
+                break;
+            }
+            
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        
+        std::cout << "\n✅ Tüm indirmeler tamamlandı!" << std::endl;
+        ShowFinalStatistics();
+    }
+    
+private:
+    void SetupEventHandlers() {
+        // Progress olayı
+        download_manager.on_download_progress = 
+            [](const DownloadItem& download) {
+                std::cout << "📊 " << download.filename 
+                          << ": " << download.GetFormattedProgress()
+                          << " (" << download.GetSpeedFormatted() << ")"
+                          << " - " << download.GetTimeRemainingFormatted() << std::endl;
+            };
+        
+        // Tamamlanma olayı
+        download_manager.on_download_completed = 
+            [](const DownloadItem& download) {
+                std::cout << "✅ İndirme tamamlandı: " << download.filename 
+                          << " (" << download.GetFileSizeFormatted() << ")" << std::endl;
+            };
+        
+        // Hata olayı
+        download_manager.on_download_error = 
+            [](const DownloadItem& download) {
+                std::cout << "❌ İndirme hatası: " << download.filename 
+                          << " - " << download.error_message << std::endl;
+            };
+        
+        // Duraklatma olayı
+        download_manager.on_download_paused = 
+            [](const DownloadItem& download) {
+                std::cout << "⏸️ İndirme duraklatıldı: " << download.filename << std::endl;
+            };
+        
+        // Devam ettirme olayı
+        download_manager.on_download_resumed = 
+            [](const DownloadItem& download) {
+                std::cout << "▶️ İndirme devam ettirildi: " << download.filename << std::endl;
+            };
+    }
+    
+    void ShowStatistics() {
+        auto stats = download_manager.GetStatistics();
+        auto downloads = download_manager.GetAllDownloads();
+        
+        std::cout << "\n📊 Mevcut İstatistikler:" << std::endl;
+        std::cout << "Toplam indirme: " << downloads.size() << std::endl;
+        std::cout << "Aktif indirme: " << stats.active_downloads << std::endl;
+        std::cout << "Duraklatılmış: " << stats.paused_downloads << std::endl;
+        std::cout << "Tamamlanmış: " << stats.completed_downloads << std::endl;
+        std::cout << "Başarısız: " << stats.failed_downloads << std::endl;
+        std::cout << "Toplam hız: " << DownloadUtils::FormatSpeed(stats.total_speed) << std::endl;
+        std::cout << "Toplam boyut: " << DownloadUtils::FormatFileSize(stats.total_bytes) << std::endl;
+    }
+    
+    void ShowFinalStatistics() {
+        auto stats = download_manager.GetStatistics();
+        
+        std::cout << "\n📊 Final İstatistikler:" << std::endl;
+        std::cout << "Toplam indirme: " << stats.total_downloads << std::endl;
+        std::cout << "Tamamlanmış: " << stats.completed_downloads << std::endl;
+        std::cout << "Başarısız: " << stats.failed_downloads << std::endl;
+        std::cout << "Toplam boyut: " << DownloadUtils::FormatFileSize(stats.total_bytes) << std::endl;
+        std::cout << "Toplam süre: " << DownloadUtils::FormatDuration(stats.total_time) << std::endl;
+        std::cout << "Ortalama hız: " << DownloadUtils::FormatSpeed(stats.average_speed) << std::endl;
+    }
+};
+
+int main() {
+    MultiThreadedDownloadDemo demo;
+    
+    if (demo.Initialize()) {
+        demo.RunDemo();
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>İndirme Sayfası UI Örneği</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_download.h"
+
+using namespace ComperCore;
+
+class DownloadPageDemo {
+private:
+    DownloadManager download_manager;
+    DownloadPage download_page;
+    
+public:
+    bool Initialize() {
+        if (!download_manager.Initialize()) {
+            return false;
+        }
+        
+        // Download page'i oluştur
+        download_page = DownloadPage(download_manager);
+        
+        // Event handlers'ı ayarla
+        SetupEventHandlers();
+        
+        return true;
+    }
+    
+    void RunDemo() {
+        std::cout << "=== İndirme Sayfası UI Demo ===" << std::endl;
+        
+        // İndirme sayfasını göster
+        download_page.Show();
+        
+        // Bazı indirmeler ekle
+        std::cout << "\n📥 Örnek indirmeler ekleniyor..." << std::endl;
+        
+        download_page.AddDownloadFromURL("https://example.com/largefile1.zip");
+        download_page.AddDownloadFromURL("https://example.com/largefile2.zip");
+        download_page.AddDownloadFromURL("https://example.com/largefile3.zip");
+        
+        // Kullanıcı etkileşimi simülasyonu
+        SimulateUserInteraction();
+        
+        // Event loop
+        std::cout << "\n🔄 Event loop başlatılıyor..." << std::endl;
+        std::cout << "Çıkmak için 'q' yazın" << std::endl;
+        
+        std::string input;
+        while (true) {
+            std::cout << "\nDownloadPage> ";
+            std::getline(std::cin, input);
+            
+            if (input == "q" || input == "quit") {
+                break;
+            } else if (input == "add") {
+                download_page.ShowAddDownloadDialog();
+            } else if (input == "settings") {
+                download_page.ShowSettingsDialog();
+            } else if (input == "refresh") {
+                download_page.Refresh();
+            } else if (input == "stats") {
+                ShowStatistics();
+            } else if (input == "help") {
+                ShowHelp();
+            } else {
+                std::cout << "Bilinmeyen komut: " << input << std::endl;
+                ShowHelp();
+            }
+        }
+        
+        download_page.Hide();
+        std::cout << "\n👋 İndirme sayfası kapatıldı" << std::endl;
+    }
+    
+private:
+    void SetupEventHandlers() {
+        // Progress olayı
+        download_manager.on_download_progress = 
+            [this](const DownloadItem& download) {
+                // UI'ı güncelle
+                download_page.Refresh();
+                
+                std::cout << "📊 " << download.filename 
+                          << ": " << download.GetFormattedProgress() << std::endl;
+            };
+        
+        // Tamamlanma olayı
+        download_manager.on_download_completed = 
+            [this](const DownloadItem& download) {
+                // UI'ı güncelle
+                download_page.Refresh();
+                
+                std::cout << "✅ İndirme tamamlandı: " << download.filename << std::endl;
+                
+                // Bildirim göster (simülasyon)
+                ShowNotification("İndirme Tamamlandı", 
+                               download.filename + " başarıyla indirildi.");
+            };
+        
+        // Hata olayı
+        download_manager.on_download_error = 
+            [this](const DownloadItem& download) {
+                // UI'ı güncelle
+                download_page.Refresh();
+                
+                std::cout << "❌ İndirme hatası: " << download.filename << std::endl;
+                
+                // Bildirim göster (simülasyon)
+                ShowNotification("İndirme Hatası", 
+                               download.filename + " indirilemedi: " + download.error_message);
+            };
+    }
+    
+    void SimulateUserInteraction() {
+        std::cout << "\n👤 Kullanıcı etkileşimi simülasyonu..." << std::endl;
+        
+        // 3 saniye sonra yeni indirme ekle
+        std::thread([this]() {
+            std::this_thread::sleep_for(std::chrono::seconds(3));
+            download_page.AddDownloadFromURL("https://example.com/userfile.zip");
+            std::cout << "📥 Kullanıcı yeni indirme ekledi" << std::endl;
+        }).detach();
+        
+        // 5 saniye sonra ayarları göster
+        std::thread([this]() {
+            std::this_thread::sleep_for(std::chrono::seconds(5));
+            download_page.ShowSettingsDialog();
+            std::cout << "⚙️ Kullanıcı ayarları açtı" << std::endl;
+        }).detach();
+        
+        // 7 saniye sonra sayfayı yenile
+        std::thread([this]() {
+            std::this_thread::sleep_for(std::chrono::seconds(7));
+            download_page.Refresh();
+            std::cout << "🔄 Kullanıcı sayfayı yeniledi" << std::endl;
+        }).detach();
+    }
+    
+    void ShowNotification(const std::string& title, const std::string& message) {
+        std::cout << "🔔 Bildirim: " << title << " - " << message << std::endl;
+    }
+    
+    void ShowStatistics() {
+        auto stats = download_manager.GetStatistics();
+        auto downloads = download_manager.GetAllDownloads();
+        
+        std::cout << "\n📊 İndirme İstatistikleri:" << std::endl;
+        std::cout << "Toplam indirme: " << downloads.size() << std::endl;
+        std::cout << "Aktif: " << stats.active_downloads << std::endl;
+        std::cout << "Duraklatılmış: " << stats.paused_downloads << std::endl;
+        std::cout << "Tamamlanmış: " << stats.completed_downloads << std::endl;
+        std::cout << "Başarısız: " << stats.failed_downloads << std::endl;
+        std::cout << "Toplam hız: " << DownloadUtils::FormatSpeed(stats.total_speed) << std::endl;
+    }
+    
+    void ShowHelp() {
+        std::cout << "\n📋 Komutlar:" << std::endl;
+        std::cout << "  add      - Yeni indirme ekle" << std::endl;
+        std::cout << "  settings - İndirme ayarları" << std::endl;
+        std::cout << "  refresh  - Sayfayı yenile" << std::endl;
+        std::cout << "  stats    - İstatistikleri göster" << std::endl;
+        std::cout << "  help     - Yardım göster" << std::endl;
+        std::cout << "  q/quit   - Çıkış" << std::endl;
+    }
+};
+
+int main() {
+    DownloadPageDemo demo;
+    
+    if (demo.Initialize()) {
+        demo.RunDemo();
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+            
+            <div class="api-section">
+                <h3>Güvenlik ve Doğrulama Örneği</h3>
+                <div class="code-block">
+                    <pre>#include "Includes/Core/comper_download.h"
+
+using namespace ComperCore;
+
+class SecureDownloadDemo {
+private:
+    DownloadManager download_manager;
+    
+public:
+    bool Initialize() {
+        if (!download_manager.Initialize()) {
+            return false;
+        }
+        
+        // Güvenlik ayarları
+        download_manager.SetMaxConcurrentDownloads(2);
+        download_manager.SetDownloadDirectory("./secure_downloads");
+        
+        // Event handlers'ı ayarla
+        SetupSecurityEventHandlers();
+        
+        return true;
+    }
+    
+    void RunDemo() {
+        std::cout << "=== Güvenli İndirme Demo ===" << std::endl;
+        
+        // Güvenli ve güvensiz dosyaları indir
+        std::cout << "\n📥 Güvenli ve güvensiz dosyalar indiriliyor..." << std::endl;
+        
+        // Güvenli dosyalar
+        std::string safe_file1 = download_manager.AddDownload(
+            "https://example.com/safe_document.pdf", 
+            "safe_document.pdf", 
+            DownloadPriority::HIGH
+        );
+        
+        std::string safe_file2 = download_manager.AddDownload(
+            "https://example.com/safe_image.jpg", 
+            "safe_image.jpg", 
+            DownloadPriority::NORMAL
+        );
+        
+        // Güvensiz dosyalar (simülasyon)
+        std::string unsafe_file1 = download_manager.AddDownload(
+            "https://example.com/suspicious.exe", 
+            "suspicious.exe", 
+            DownloadPriority::LOW
+        );
+        
+        std::string unsafe_file2 = download_manager.AddDownload(
+            "https://example.com/malware.zip", 
+            "malware.zip", 
+            DownloadPriority::LOW
+        );
+        
+        std::cout << "Güvenli dosyalar:" << std::endl;
+        std::cout << "  - " << safe_file1 << " (safe_document.pdf)" << std::endl;
+        std::cout << "  - " << safe_file2 << " (safe_image.jpg)" << std::endl;
+        
+        std::cout << "Güvensiz dosyalar:" << std::endl;
+        std::cout << "  - " << unsafe_file1 << " (suspicious.exe)" << std::endl;
+        std::cout << "  - " << unsafe_file2 << " (malware.zip)" << std::endl;
+        
+        // İndirme takibi
+        std::cout << "\n⏱️ Güvenlik kontrolleri ile indirme takibi..." << std::endl;
+        
+        // Tüm indirmelerin bitmesini bekle
+        while (true) {
+            auto downloads = download_manager.GetAllDownloads();
+            bool all_completed = true;
+            
+            for (const auto& download : downloads) {
+                if (download->IsDownloading() || download->IsPaused()) {
+                    all_completed = false;
+                    break;
+                }
+            }
+            
+            if (all_completed) {
+                break;
+            }
+            
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+        
+        // Sonuçları göster
+        ShowSecurityResults();
+    }
+    
+private:
+    void SetupSecurityEventHandlers() {
+        // Progress olayı
+        download_manager.on_download_progress = 
+            [](const DownloadItem& download) {
+                std::cout << "📊 " << download.filename 
+                          << ": " << download.GetFormattedProgress();
+                
+                if (!download->is_verified) {
+                    std::cout << " (doğrulanıyor...)";
+                }
+                
+                if (!download->is_safe) {
+                    std::cout << " ⚠️ GÜVENLİ DEĞİL!";
+                }
+                
+                std::cout << std::endl;
+            };
+        
+        // Tamamlanma olayı
+        download_manager.on_download_completed = 
+            [](const DownloadItem& download) {
+                std::cout << "✅ İndirme tamamlandı: " << download.filename << std::endl;
+                
+                if (download->is_verified) {
+                    std::cout << "  🔒 Dosya doğrulandı" << std::endl;
+                } else {
+                    std::cout << "  ❌ Dosya doğrulanamadı" << std::endl;
+                }
+                
+                if (download->is_safe) {
+                    std::cout << "  🛡️ Dosya güvenli" << std::endl;
+                } else {
+                    std::cout << "  ⚠️ DOSYA TEHLİKELİ!" << std::endl;
+                }
+            };
+        
+        // Hata olayı
+        download_manager.on_download_error = 
+            [](const DownloadItem& download) {
+                std::cout << "❌ İndirme hatası: " << download.filename 
+                          << " - " << download.error_message << std::endl;
+            };
+        
+        // Güvenlik uyarısı olayı
+        download_manager.on_security_warning = 
+            [](const DownloadItem& download, const std::string& warning) {
+                std::cout << "⚠️ Güvenlik uyarısı: " << download.filename 
+                          << " - " << warning << std::endl;
+            };
+    }
+    
+    void ShowSecurityResults() {
+        auto downloads = download_manager.GetAllDownloads();
+        
+        std::cout << "\n🔒 Güvenlik Sonuçları:" << std::endl;
+        
+        int safe_count = 0;
+        int unsafe_count = 0;
+        int verified_count = 0;
+        int unverified_count = 0;
+        
+        for (const auto& download : downloads) {
+            std::cout << "\n📁 " << download.filename << std::endl;
+            std::cout << "  Boyut: " << download->GetFileSizeFormatted() << std::endl;
+            std::cout << "  Durum: " << GetStatusString(download->status) << std::endl;
+            std::cout << "  Doğrulama: " << (download->is_verified ? "✅ Tamam" : "❌ Başarısız") << std::endl;
+            std::cout << "  Güvenlik: " << (download->is_safe ? "🛡️ Güvenli" : "⚠️ Tehlikeli") << std::endl;
+            
+            if (download->is_safe) {
+                safe_count++;
+            } else {
+                unsafe_count++;
+            }
+            
+            if (download->is_verified) {
+                verified_count++;
+            } else {
+                unverified_count++;
+            }
+        }
+        
+        std::cout << "\n📊 Özet:" << std::endl;
+        std::cout << "Güvenli dosyalar: " << safe_count << std::endl;
+        std::cout << "Tehlikeli dosyalar: " << unsafe_count << std::endl;
+        std::cout << "Doğrulanmış dosyalar: " << verified_count << std::endl;
+        std::cout << "Doğrulanamamış dosyalar: " << unverified_count << std::endl;
+        
+        if (unsafe_count > 0) {
+            std::cout << "\n⚠️ UYARI: " << unsafe_count << " adet tehlikeli dosya tespit edildi!" << std::endl;
+            std::cout << "Bu dosyalar sistem için risk oluşturabilir." << std::endl;
+        }
+    }
+    
+    std::string GetStatusString(DownloadStatus status) {
+        switch (status) {
+            case DownloadStatus::PENDING: return "⏳ Beklemede";
+            case DownloadStatus::DOWNLOADING: return "📥 İndiriliyor";
+            case DownloadStatus::PAUSED: return "⏸️ Duraklatıldı";
+            case DownloadStatus::COMPLETED: return "✅ Tamamlandı";
+            case DownloadStatus::FAILED: return "❌ Başarısız";
+            case DownloadStatus::CANCELLED: return "🚫 İptal edildi";
+            case DownloadStatus::VERIFYING: return "🔍 Doğrulanıyor";
+            case DownloadStatus::SCANNING: return "🛡️ Taraniyor";
+            default: return "❓ Bilinmeyen";
+        }
+    }
+};
+
+int main() {
+    SecureDownloadDemo demo;
+    
+    if (demo.Initialize()) {
+        demo.RunDemo();
+    }
+    
+    return 0;
+}</pre>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Comper Engine SDK. Tüm hakları saklıdır.</p>
+        <p>
+            <a href="../index.html" style="color: var(--primary-red);">← Ana Sayfa</a> | 
+            <a href="core.html" style="color: var(--primary-red);">Core API</a> | 
+            <a href="network.html" style="color: var(--primary-red);">Network API</a> | 
+            <a href="render.html" style="color: var(--primary-red);">Render API</a>
+        </p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

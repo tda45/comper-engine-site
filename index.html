@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comper Engine SDK - Professional Browser Development Kit</title>
+    
+    <!-- Night Red Ultra Theme Styles -->
+    <style>
+        :root {
+            --primary-red: #E60000;
+            --dark-bg: #050505;
+            --text-white: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --surface-dark: #1A1A1A;
+            --neon-glow: #FF0033;
+            --border-red: #CC0000;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Neon Glow Effects */
+        .neon-glow {
+            text-shadow: 0 0 10px var(--primary-red), 
+                        0 0 20px var(--primary-red), 
+                        0 0 30px var(--neon-glow);
+        }
+        
+        .neon-border {
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.8),
+                        inset 0 0 15px rgba(230, 0, 0, 0.3);
+        }
+        
+        .neon-button {
+            background: linear-gradient(135deg, var(--primary-red), var(--border-red));
+            color: var(--text-white);
+            border: 2px solid var(--primary-red);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(230, 0, 0, 0.8);
+        }
+        
+        .neon-button:hover {
+            background: linear-gradient(135deg, var(--neon-glow), var(--primary-red));
+            box-shadow: 0 0 30px rgba(255, 0, 51, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(180deg, var(--surface-dark), var(--dark-bg));
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--neon-glow), var(--primary-red), var(--border-red), var(--neon-glow));
+            z-index: -1;
+            animation: borderRotate 3s linear infinite;
+        }
+        
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--surface-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background: var(--primary-red);
+            box-shadow: 0 0 10px rgba(230, 0, 0, 0.8);
+        }
+        
+        nav a.active {
+            background: var(--primary-red);
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Section Styles */
+        section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--surface-dark);
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, var(--primary-red), var(--neon-glow), var(--border-red));
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem 0;
+            color: var(--neon-glow);
+        }
+        
+        /* SDK Sections Grid */
+        .sdk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .sdk-section {
+            background: var(--dark-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--primary-red);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .sdk-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(230, 0, 0, 0.5);
+            border-color: var(--neon-glow);
+        }
+        
+        .sdk-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .sdk-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-red);
+        }
+        
+        .sdk-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        
+        /* Code Block */
+        .code-block {
+            background: var(--dark-bg);
+            border: 1px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface-dark);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-red);
+            margin-top: 4rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .sdk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="neon-glow">Comper Engine SDK</h1>
+        <p class="subtitle">Professional Browser Development Kit - 1.5GB'lık Geliştirme Gücü</p>
+        <a href="#quickstart" class="neon-button">Hızlı Başlangıç</a>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview" class="active">Genel Bakış</a></li>
+            <li><a href="#sdk-core">SDK Core</a></li>
+            <li><a href="#sdk-network">SDK Network</a></li>
+            <li><a href="#sdk-render">SDK Render</a></li>
+            <li><a href="#sdk-html">SDK HTML</a></li>
+            <li><a href="#sdk-browser">SDK Browser</a></li>
+            <li><a href="#sdk-download">SDK Download</a></li>
+            <li><a href="#examples">Örnekler</a></li>
+            <li><a href="#download">İndir</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview" class="fade-in">
+            <h2 class="neon-glow">Dünyanın En Gelişmiş Tarayıcı SDK'si</h2>
+            <p>Comper Engine SDK, profesyonel tarayıcı geliştirme için tasarlanmış devasa bir kütüphane paketidir. Geliştiriciler sadece birkaç konfigürasyon dosyasını düzenleyerek kendi profesyonel tarayıcılarını oluşturabilirler.</p>
+            
+            <div class="sdk-grid">
+                <div class="sdk-section">
+                    <div class="sdk-icon">🎨</div>
+                    <div class="sdk-title">Night Red Ultra</div>
+                    <div class="sdk-description">Shader destekli, neon parlmalı, 4K grafik motoru</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">🛠️</div>
+                    <div class="sdk-title">Gelişmiş DevTools</div>
+                    <div class="sdk-description">Chrome'dan daha detaylı inspector ve analiz araçları</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">🔒</div>
+                    <div class="sdk-title">AdBlocker Engine</div>
+                    <div class="sdk-description">Real-time reklam engelleme ve güvenlik filtreleme</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">📬</div>
+                    <div class="sdk-title">PDF & Media</div>
+                    <div class="sdk-description">Harici oynatıcı gerekmez, 4K video desteği</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">📜</div>
+                    <div class="sdk-title">Comper Scripts</div>
+                    <div class="sdk-description">v8 tabanlı scripting ve eklenti sistemi</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">�</div>
+                    <div class="sdk-title">Ultra Performans</div>
+                    <div class="sdk-description">Multi-threading, GPU acceleration, memory optimization</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sdk-core" class="fade-in">
+            <h2 class="neon-glow">SDK Core API</h2>
+            <p>Comper Engine'in temel motoru ve çekirdek işlevsellikleri.</p>
+            
+            <div class="code-block">
+                <pre>#include "Includes/Core/comper_core.h"
+#include "Includes/SDK/comper_sdk.h"
+
+using namespace ComperCore;
+using namespace ComperSDK;
+
+class MyBrowser : public ComperEngine {
+public:
+    void Run() {
+        // Night Red Ultra temasını uygula
+        NightRedUltra::EnableNeonGlow(true);
+        NightRedUltra::SetNeonIntensity(0.8f);
+        NightRedUltra::SetGlowColor(230, 0, 0);
+        
+        // Sayfayı yükle
+        NetworkResponse response = LoadPage("https://example.com");
+        
+        if (response.IsSuccess()) {
+            auto document = ParseHTML(response.body);
+            RenderPage(document);
+        }
+    }
+};</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>Engine Management:</strong> Başlatma, kapatma, konfigürasyon</li>
+                <li><strong>Theme System:</strong> Night Red Ultra entegrasyonu</li>
+                <li><strong>Resource Management:</strong> Bellek optimizasyonu ve kaynak yönetimi</li>
+                <li><strong>Error Handling:</strong> Detaylı hata yönetimi ve logging</li>
+            </ul>
+        </section>
+        
+        <section id="sdk-network" class="fade-in">
+            <h2 class="neon-glow">SDK Network API</h2>
+            <p>HTTP/HTTPS istekleri, WebSocket bağlantıları ve ağ yönetimi.</p>
+            
+            <div class="code-block">
+                <pre>NetworkManager network;
+network.Initialize();
+
+NetworkResponse response = network.Get("https://example.com");
+if (response.IsSuccess()) {
+    std::cout << "Content: " << response.body << std::endl;
+}
+
+// Async istek
+network.AsyncGet("https://api.example.com/data", 
+    [](const NetworkResponse& response) {
+        // Callback fonksiyonu
+        std::cout << "Async response received!" << std::endl;
+    });</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>HTTP/HTTPS Support:</strong> Modern protokol desteği</li>
+                <li><strong>Connection Pooling:</strong> Performans için bağlantı havuzu</li>
+                <li><strong>Async Operations:</strong> Asenkron istek desteği</li>
+                <li><strong>SSL/TLS Security:</strong> Güvenli bağlantılar</li>
+                <li><strong>Cookie Management:</strong> Otomatik cookie yönetimi</li>
+            </ul>
+        </section>
+        
+        <section id="sdk-render" class="fade-in">
+            <h2 class="neon-glow">SDK Render API</h2>
+            <p>2D/3D rendering, Night Red Ultra grafik motoru ve GPU acceleration.</p>
+            
+            <div class="code-block">
+                <pre>Renderer renderer;
+renderer.Initialize(window_handle);
+
+// Night Red Ultra efektleri
+NightRedUltra::EnableNeonGlow(true);
+NightRedUltra::SetNeonIntensity(0.9f);
+
+// Çizim işlemleri
+renderer.Clear(Color(0.02f, 0.02f, 0.02f, 1.0f));
+renderer.DrawFilledRectangle(Rectangle(100, 100, 200, 50), 
+                              Color(0.9f, 0.0f, 0.0f, 1.0f));
+renderer.DrawText("Hello Comper!", Point(150, 150), 
+                  Color(1.0f, 1.0f, 1.0f, 1.0f));
+renderer.Present();</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>2D/3D Rendering:</strong> DirectX 12 ve Vulkan desteği</li>
+                <li><strong>Night Red Ultra:</strong> Özel shader efektleri</li>
+                <li><strong>GPU Acceleration:</strong> Hardware hızlandırma</li>
+                <li><strong>4K/8K Support:</strong> Ultra yüksek çözünürlük</li>
+                <li><strong>120 FPS:</strong> Yüksek kare hızı</li>
+            </ul>
+        </section>
+        
+        <section id="sdk-html" class="fade-in">
+            <h2 class="neon-glow">SDK HTML API</h2>
+            <p>HTML5 parsing, DOM manipulation ve CSS processing.</p>
+            
+            <div class="code-block">
+                <pre>HTMLParser parser;
+std::shared_ptr&lt;DOMDocument&gt; document = parser.Parse(html);
+
+// Element seçimi
+auto element = document->QuerySelector("#main .content");
+if (element) {
+    element->SetAttribute("class", "highlighted");
+    element->SetTextContent("Updated content");
+}
+
+// Yeni element oluşturma
+auto div = document->CreateElement("div");
+div->SetAttribute("id", "new-div");
+div->SetTextContent("Dynamic content");
+document->GetDocumentElement()->AppendChild(div);</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>HTML5 Parser:</strong> Modern standart desteği</li>
+                <li><strong>CSS3 Support:</strong> Stil ve layout motoru</li>
+                <li><strong>DOM Manipulation:</strong> Element yönetimi</li>
+                <li><strong>Query Selector:</strong> CSS selector desteği</li>
+                <li><strong>Event Handling:</strong> Olay yönetimi</li>
+            </ul>
+        </section>
+        
+        <section id="sdk-browser" class="fade-in">
+            <h2 class="neon-glow">SDK Browser API</h2>
+            <p>Modern tarayıcı özellikleri: sekme yönetimi, yer işaretleri, geçmiş.</p>
+            
+            <div class="code-block">
+                <pre>Browser browser;
+browser.Initialize();
+
+// Sekme yönetimi
+std::string tab1 = browser.CreateTab("https://google.com");
+std::string tab2 = browser.CreateTab("https://github.com");
+
+// Yer işareti ekleme
+browser.AddBookmark("Google", "https://google.com");
+
+// Geçmiş araması
+auto history = browser.SearchHistory("github.com");
+
+// Navigasyon
+browser.NavigateTab(tab1, "https://example.com");
+browser.GoBackInTab(tab1);
+browser.GoForwardInTab(tab1);</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>Tab Management:</strong> Multi-tab sistemi</li>
+                <li><strong>Bookmark System:</strong> Klasör yapısı ile yer işaretleri</li>
+                <li><strong>History Tracking:</strong> Otomatik geçmiş kaydı</li>
+                <li><strong>Session Management:</strong> Oturum yönetimi</li>
+                <li><strong>Live URL Updates:</strong> Canlı URL değişimi</li>
+            </ul>
+        </section>
+        
+        <section id="sdk-download" class="fade-in">
+            <h2 class="neon-glow">SDK Download API</h2>
+            <p>Multi-threaded indirme yönetimi, pause/resume desteği ve güvenlik kontrolleri.</p>
+            
+            <div class="code-block">
+                <pre>DownloadManager download_manager;
+download_manager.Initialize();
+
+// İndirme ekleme
+std::string download_id = download_manager.AddDownload(
+    "https://example.com/file.zip", 
+    "download.zip", 
+    DownloadPriority::HIGH
+);
+
+// Progress takibi
+download_manager.on_download_progress = 
+    [](const DownloadItem& download) {
+        std::cout << "Progress: " 
+                  << download.GetFormattedProgress() << std::endl;
+    };
+
+// İndirme kontrolü
+auto download = download_manager.GetDownload(download_id);
+if (download->IsDownloading()) {
+    download->Pause();
+    // Daha sonra devam ettir
+    download->Resume();
+}</pre>
+            </div>
+            
+            <h3>Özellikler</h3>
+            <ul>
+                <li><strong>Multi-threaded:</strong> Eşzamanlı indirme desteği</li>
+                <li><strong>Pause/Resume:</strong> İndirme kontrolü</li>
+                <li><strong>Progress Tracking:</strong> Real-time progress ve ETA</li>
+                <li><strong>File Verification:</strong> Bütünlük kontrolü</li>
+                <li><strong>Malware Scanning:</strong> Güvenlik taraması</li>
+            </ul>
+        </section>
+        
+        <section id="examples" class="fade-in">
+            <h2 class="neon-glow">Örnekler</h2>
+            <p>Comper Engine SDK kullanımı için çeşitli örnekler.</p>
+            
+            <div class="sdk-grid">
+                <div class="sdk-section">
+                    <div class="sdk-icon">�</div>
+                    <div class="sdk-title">Basic Browser</div>
+                    <div class="sdk-description">Hızlı başlangıç için temel tarayıcı</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">🚀</div>
+                    <div class="sdk-title">Advanced Browser</div>
+                    <div class="sdk-description">Gelişmiş özellikler ve performans</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">🏢</div>
+                    <div class="sdk-title">Enterprise Browser</div>
+                    <div class="sdk-description">Kurumsal güvenlik ve yönetim</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">📑</div>
+                    <div class="sdk-title">Tab Browser</div>
+                    <div class="sdk-description">Modern sekme yönetimi ve UI</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">🚀</div>
+                    <div class="sdk-title">Download Manager</div>
+                    <div class="sdk-description">Multi-threaded indirme sistemi</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">💼</div>
+                    <div class="sdk-title">Professional Browser</div>
+                    <div class="sdk-description">Production-ready, enterprise seviyesi</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="download" class="fade-in">
+            <h2 class="neon-glow">İndir</h2>
+            <p>Comper Engine SDK'yı hemen indirin!</p>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <a href="https://github.com/tda45/comper-engine/archive/refs/heads/main.zip" class="neon-button" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    🚀 SDK'yı İndir
+                </a>
+            </div>
+            
+            <div class="sdk-grid">
+                <div class="sdk-section">
+                    <div class="sdk-icon">📦</div>
+                    <div class="sdk-title">GitHub</div>
+                    <div class="sdk-description">Kaynak kodu ve releases</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">📖</div>
+                    <div class="sdk-title">Docs</div>
+                    <div class="sdk-description">Online dokümantasyon</div>
+                </div>
+                
+                <div class="sdk-section">
+                    <div class="sdk-icon">💬</div>
+                    <div class="sdk-title">Discord</div>
+                    <div class="sdk-description">Topluluk ve destek</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 tda45. Tüm hakları saklıdır.</p>
+        <p>
+            <a href="https://github.com/tda45/comper-engine" style="color: var(--primary-red);">GitHub</a> | 
+            <a href="https://docs.comper.engine" style="color: var(--primary-red);">Dokümantasyon</a> | 
+        </p>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Update active navigation based on scroll position
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add fade-in animation to sections when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Add hover effect to SDK sections
+        const sdkSections = document.querySelectorAll('.sdk-section');
+        sdkSections.forEach(section => {
+            section.addEventListener('mouseenter', () => {
+                section.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            section.addEventListener('mouseleave', () => {
+                section.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Dynamic neon glow effect
+        let glowIntensity = 0.8;
+        let glowDirection = 1;
+        
+        function animateGlow() {
+            glowIntensity += 0.01 * glowDirection;
+            if (glowIntensity >= 1.0 || glowIntensity <= 0.6) {
+                glowDirection *= -1;
+            }
+            
+            document.documentElement.style.setProperty('--neon-glow-intensity', glowIntensity);
+            requestAnimationFrame(animateGlow);
+        }
+        
+        animateGlow();
+    </script>
+</body>
+</html>
